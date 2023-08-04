@@ -1,6 +1,4 @@
-'use client';
-
-import { Button, Navbar } from 'flowbite-react';
+import { Navbar } from 'flowbite-react';
 
 export default function NavbarWithCTAButton() {
     return (
@@ -9,19 +7,19 @@ export default function NavbarWithCTAButton() {
             rounded
         >
             <Navbar.Brand href="https://flowbite-react.com">
-                <img
-                    alt="Flowbite React Logo"
-                    className="mr-3 h-6 sm:h-9"
-                    src="/favicon.svg"
-                />
+                <div className="logo max-h-20">
+                    <img
+                        alt="Books Logo"
+                        className="mr-0  h-20 "
+                        src="/src/assets/images/book1.png"
+                    />
+                </div>
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                    Flowbite React
+                    Books Zone
                 </span>
             </Navbar.Brand>
             <div className="flex md:order-2">
-                <Button>
-                    Get started
-                </Button>
+
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>
@@ -34,16 +32,13 @@ export default function NavbarWithCTAButton() {
                     </p>
                 </Navbar.Link>
                 <Navbar.Link href="#">
-                    About
+                    All books
                 </Navbar.Link>
-                <Navbar.Link href="#">
-                    Services
+                <Navbar.Link href="/signin">
+                    Sign in
                 </Navbar.Link>
-                <Navbar.Link href="#">
-                    Pricing
-                </Navbar.Link>
-                <Navbar.Link href="#">
-                    Contact
+                <Navbar.Link href="/signup">
+                    Sign Up
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
