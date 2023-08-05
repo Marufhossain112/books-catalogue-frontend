@@ -1,6 +1,7 @@
+import LatestBooks from "./LatestBooks";
 
 export default function Home() {
   return (
-    <div>Home</div>
-  )
+    <LatestBooks></LatestBooks>
+  );
 }

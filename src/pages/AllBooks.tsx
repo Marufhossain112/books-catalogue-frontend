@@ -2,7 +2,7 @@
 
 import { Card } from 'flowbite-react';
 
-export default function Books() {
+export default function AllBooks() {
     return (
         <div className='flex flex-wrap container mx-auto justify-center'>
             <Card

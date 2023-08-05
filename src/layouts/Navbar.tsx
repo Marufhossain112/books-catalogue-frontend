@@ -6,7 +6,7 @@ export default function NavbarWithCTAButton() {
             fluid
             rounded
         >
-            <Navbar.Brand href="https://flowbite-react.com">
+            <Navbar.Brand href="/">
                 <div className="logo max-h-20">
                     <img
                         alt="Books Logo"
@@ -25,13 +25,13 @@ export default function NavbarWithCTAButton() {
             <Navbar.Collapse>
                 <Navbar.Link
                     active
-                    href="#"
+                    href="/"
                 >
                     <p>
                         Home
                     </p>
                 </Navbar.Link>
-                <Navbar.Link href="/books">
+                <Navbar.Link href="/all-books">
                     All books
                 </Navbar.Link>
                 <Navbar.Link href="/signin">
