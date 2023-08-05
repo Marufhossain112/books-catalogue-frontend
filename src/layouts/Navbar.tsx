@@ -31,7 +31,7 @@ export default function NavbarWithCTAButton() {
                         Home
                     </p>
                 </Navbar.Link>
-                <Navbar.Link href="#">
+                <Navbar.Link href="/books">
                     All books
                 </Navbar.Link>
                 <Navbar.Link href="/signin">

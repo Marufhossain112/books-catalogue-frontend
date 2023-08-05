@@ -3,6 +3,7 @@ import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
 import App from "../App";
 import Signin from "../pages/Signin";
+import Books from "../pages/AllBooks";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
   {
     path: "/signin",
     element: <Signin></Signin>
+  },
+  {
+    path: "/books",
+    element: <Books></Books>
   },
   {
     path: "*",
