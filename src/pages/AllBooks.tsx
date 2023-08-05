@@ -1,8 +1,11 @@
 'use client';
 
 import { Card } from 'flowbite-react';
+import { useGetBooksQuery } from '../redux/features/api/apiSlice';
 
 export default function AllBooks() {
+    const { data } = useGetBooksQuery(undefined);
+    // console.log("Daaaaaaaaataaaaaaa", data);
     return (
         <div className='flex flex-wrap container mx-auto justify-center'>
             <Card
