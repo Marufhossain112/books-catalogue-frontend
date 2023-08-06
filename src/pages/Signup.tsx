@@ -3,6 +3,10 @@ import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 
+import { useState } from "react";
+import Toaster from "../components/Toast";
+import FailedToast from "../components/FailedToast";
+
 interface IUser {
     name: string;
     email: string;
@@ -13,18 +17,26 @@ interface IUser {
     presentAddress: string;
 }
 export default function SignUp() {
+    const [isSuccess, setSuccess] = useState(false);
+    const [isFailed, setFailed] = useState("");
+    const [showCross, setShowCross] = useState(false);
     const [postCreateUser] = usePostCreateUserMutation();
-    const { register, handleSubmit, formState: { errors } } = useForm<IUser>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IUser>();
     const onSubmit: SubmitHandler<IUser> = async (data) => {
         await postCreateUser(data).unwrap().then((response) => {
-            console.log(response);
+            // console.log(response);
+            if (response.statusCode === 200) {
+                setSuccess(true);
+            }
         }).catch((error) => {
             // Handle the error here
             console.log('errors', error);
+            if (error.status === 406) {
+                setFailed(error?.data?.message);
+                setShowCross(true);
+            }
         });
-
-
-
+        reset();
     };
 
     return (
@@ -164,6 +176,8 @@ export default function SignUp() {
                         </Link>
                     </Label>
                 </div>
+                {isSuccess && <Toaster eventName="User created successfully"></Toaster>}
+                {showCross && <FailedToast isFailed={isFailed}></FailedToast>}
                 <Button type="submit">
                     Register new account
                 </Button>
