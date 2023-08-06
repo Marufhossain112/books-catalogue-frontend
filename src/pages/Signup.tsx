@@ -5,7 +5,6 @@ import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 
 import { useState } from "react";
 import Toaster from "../components/Toast";
-import FailedToast from "../components/FailedToast";
 
 interface IUser {
     name: string;
@@ -20,8 +19,14 @@ export default function SignUp() {
     const [isSuccess, setSuccess] = useState(false);
     const [isFailed, setFailed] = useState("");
     const [showCross, setShowCross] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const [postCreateUser] = usePostCreateUserMutation();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IUser>();
+    const handleCheckboxChange = () => {
+        setIsChecked((prevState) => !prevState);
+    };
+
+    // submit the form
     const onSubmit: SubmitHandler<IUser> = async (data) => {
         await postCreateUser(data).unwrap().then((response) => {
             // console.log(response);
@@ -158,7 +163,7 @@ export default function SignUp() {
                     {errors.presentAddress && <p>{errors.presentAddress.message?.toString()}</p>}
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="agree" />
+                    <Checkbox checked={isChecked} onChange={handleCheckboxChange} id="agree" />
                     <Label
                         className="flex"
                         htmlFor="agree"
@@ -176,12 +181,12 @@ export default function SignUp() {
                         </Link>
                     </Label>
                 </div>
-                {isSuccess && <Toaster eventName="User created successfully"></Toaster>}
-                {showCross && <FailedToast isFailed={isFailed}></FailedToast>}
-                <Button type="submit">
+                {isSuccess && <Toaster eventName="User created successfully" isPass={true} ></Toaster>}
+                {showCross && <Toaster eventName={isFailed} isPass={false} ></Toaster>}
+                <Button disabled={!isChecked} type="submit">
                     Register new account
                 </Button>
-            </form>
+            </form >
         </>
 
     );
