@@ -1,9 +1,27 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Label, TextInput } from 'flowbite-react';
+import { usePostLoginUserMutation } from "../redux/features/api/apiSlice";
+import { ILoginUser } from "../interfaces/common";
 
 export default function Signin() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data: unknown) => console.log(data);
+    const [postLoginUser] = usePostLoginUserMutation(undefined);
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginUser>();
+    // submit the form
+    const onSubmit: SubmitHandler<ILoginUser> = async (data) => {
+        await postLoginUser(data).unwrap().then((response) => {
+            console.log(response);
+            if (response.statusCode === 200) {
+                // setSuccess(true);
+            }
+        }).catch((error) => {
+            console.log('errors', error);
+            if (error.status === 406) {
+                // setFailed(error?.data?.message);
+                // setShowCross(true);
+            }
+        });
+        reset();
+    };
     return (
         <>
             <h3 className='text-center font-medium text-3xl mt-5'>Sign in</h3>

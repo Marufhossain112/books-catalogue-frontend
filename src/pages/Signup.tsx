@@ -5,16 +5,8 @@ import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 
 import { useState } from "react";
 import Toaster from "../components/Toast";
+import { IUser } from "../interfaces/common";
 
-interface IUser {
-    name: string;
-    email: string;
-    password: string;
-    gender: string;
-    contactNo: string;
-    bloodGroup: string;
-    presentAddress: string;
-}
 export default function SignUp() {
     const [isSuccess, setSuccess] = useState(false);
     const [isFailed, setFailed] = useState("");
@@ -34,7 +26,6 @@ export default function SignUp() {
                 setSuccess(true);
             }
         }).catch((error) => {
-            // Handle the error here
             console.log('errors', error);
             if (error.status === 406) {
                 setFailed(error?.data?.message);
