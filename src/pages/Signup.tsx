@@ -1,10 +1,32 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 
+interface IUser {
+    name: string;
+    email: string;
+    password: string;
+    gender: string;
+    contactNo: string;
+    bloodGroup: string;
+    presentAddress: string;
+}
 export default function SignUp() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data: unknown) => console.log(data);
+    const [postCreateUser] = usePostCreateUserMutation();
+    const { register, handleSubmit, formState: { errors } } = useForm<IUser>();
+    const onSubmit: SubmitHandler<IUser> = async (data) => {
+        await postCreateUser(data).unwrap().then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            // Handle the error here
+            console.log('errors', error);
+        });
+
+
+
+    };
+
     return (
         <>
             <h3 className='text-center font-medium text-3xl mt-5'>Create Account</h3>
@@ -63,13 +85,14 @@ export default function SignUp() {
                     {errors.password && <p>{errors.password.message?.toString()}</p>}
                 </div>
                 {/* gender */}
-                <label>Gender Selection</label>
-                <select {...register("gender")}>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
-
+                <div>
+                    <label>Gender Selection</label>
+                    <select {...register("gender")}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
                 {/* BloodGroup */}
                 <div className="max-w-md" id="select">
                     <div className="mb-2 block">
@@ -120,7 +143,7 @@ export default function SignUp() {
                         type="text"
                         {...register("presentAddress", { required: 'Address is required' })}
                     />
-                    {errors.address && <p>{errors.address.message?.toString()}</p>}
+                    {errors.presentAddress && <p>{errors.presentAddress.message?.toString()}</p>}
                 </div>
                 <div className="flex items-center gap-2">
                     <Checkbox id="agree" />
