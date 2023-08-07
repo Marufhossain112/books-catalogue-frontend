@@ -48,7 +48,6 @@ export default function NavbarWithCTAButton() {
                     ) : (
                         <Navbar.Link href="/signin">Sign in</Navbar.Link>
                     )}
-                    <Navbar.Link href="/signup">Sign Up</Navbar.Link>
                 </>}
 
                 <Navbar.Link href="/signup">

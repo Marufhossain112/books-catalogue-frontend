@@ -1,143 +1,58 @@
 'use client';
 
-import { Card } from 'flowbite-react';
+import { Card, Spinner } from 'flowbite-react';
 import { useGetBooksQuery } from '../redux/features/api/apiSlice';
-
+import { IBook } from '../interfaces/common';
 export default function AllBooks() {
-    const { data } = useGetBooksQuery(undefined);
-    // console.log("Daaaaaaaaataaaaaaa", data);
+    const { data, isLoading } = useGetBooksQuery(undefined);
+    if (isLoading) {
+        // return <p>I am Loading</p>;
+        return <div className='text-center'>
+            <Spinner
+                aria-label="Extra large spinner example"
+                size="xl"
+            />
+        </div>;
+
+    }
+
+    console.log("data", data?.data);
+    // eslint-disable-next-line no-unsafe-optional-chaining
+
+    // const { author, genre, imgUrl, publicationYear, title } = data.data;
+    const books = data.data;
+    // console.log('imgUrl', imgUrl);
     return (
         <div className='flex flex-wrap container mx-auto justify-center'>
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-            <Card
-                style={{ maxWidth: "20rem", margin: "1rem 1rem" }}
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/src/assets/images/book1.png"
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <p>
-                        Noteworthy technology acquisitions 2021
-                    </p>
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                </p>
-            </Card >
-
-        </div>
+            {books.map((book: IBook) => {
+                const { author, genre, publicationYear, title, imgUrl } = book;
+                return (<Card
+                    horizontal
+                    imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
+                    className='mx-auto mb-6 root'
+                    style={{ minHeight: "15rem", maxHeight: "15rem", minWidth: "25rem", maxWidth: "25rem", }}
+                // style={{ height: "15rem", width: "25rem" }}
+                >
+                    <div>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <p>
+                                {title}
+                            </p>
+                        </h5>
+                        <p className="font-normal text-gray-700 dark:text-gray-400">
+                            <p>
+                                {author}
+                            </p>
+                        </p>
+                    </div>
+                    <div>
+                        <p><span className='font-bold'>Genre : </span>{genre}</p>
+                        <p><span className='font-bold'>Released : </span>{publicationYear}</p>
+                    </div>
+                </Card>);
+            }
+            )}
+        </div >
     );
 }
 
