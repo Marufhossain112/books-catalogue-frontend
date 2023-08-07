@@ -15,6 +15,9 @@ export const api = createApi({
         getSingleBook: builder.query({
             query: (id) => `books/${id}`,
         }),
+        getSearchedBooksFromLatest: builder.query({
+            query: (value) => `books/latest-books?searchTerm=${value}`,
+        }),
         postCreateUser: builder.mutation({
             query: (data) => ({
                 url: `users/signup`,
@@ -34,6 +37,6 @@ export const api = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery } = api;
+export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery } = api;
 
 

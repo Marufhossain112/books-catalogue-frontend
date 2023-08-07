@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { api } from "./features/api/apiSlice";
 import userReducer from "./features/user/userSlice";
+import searchAndFilterReducer from './features/searchFilters/reducers';
 // Persist configuration for the regular Redux store
 const reduxPersistConfig = {
     key: 'root', // Change this key if needed
@@ -17,6 +18,7 @@ const persistedReducer = persistReducer(reduxPersistConfig, rootReducer);
 const store = configureStore({
     reducer: {
         persistedReducer,
+        searchAndFilter: searchAndFilterReducer,
         [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
