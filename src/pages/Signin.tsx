@@ -2,8 +2,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Label, TextInput } from 'flowbite-react';
 import { usePostLoginUserMutation } from "../redux/features/api/apiSlice";
 import { ILoginUser } from "../interfaces/common";
+import { useAppDispatch } from "../redux/hooks";
+import { login } from "../redux/features/user/userSlice";
 
 export default function Signin() {
+    const dispatch = useAppDispatch();
     const [postLoginUser] = usePostLoginUserMutation(undefined);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginUser>();
     // submit the form
@@ -11,7 +14,9 @@ export default function Signin() {
         await postLoginUser(data).unwrap().then((response) => {
             console.log(response);
             if (response.statusCode === 200) {
-                // setSuccess(true);
+                const user = data.email;
+                const token = response.data.accessToken;
+                dispatch(login({ user, token }));
             }
         }).catch((error) => {
             console.log('errors', error);
