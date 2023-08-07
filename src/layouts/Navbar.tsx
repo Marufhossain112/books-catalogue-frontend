@@ -1,6 +1,8 @@
-import { Button, Checkbox, Navbar, TextInput, Label } from 'flowbite-react';
+import { Button, Navbar, TextInput } from 'flowbite-react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout } from '../redux/features/user/userSlice';
+import { FaFilter } from 'react-icons/fa';
+
 import "./../styles/styles.css";
 export default function NavbarWithCTAButton() {
     const isLoggedIn = useAppSelector((state) => state.persistedReducer.isLoggedIn);
@@ -39,9 +41,23 @@ export default function NavbarWithCTAButton() {
                             type="email"
                         />
                     </div>
-                    <Button type="submit">
-                        Search
-                    </Button>
+                    <div>
+                        <div className='flex items-center gap-2'>
+                            <Button type="submit">
+                                Search
+                            </Button>
+                            <FaFilter></FaFilter>
+                            <div className="flex flex-col">
+                                <p className='text-stone-500 hover:underline'>Genre</p><p className='text-stone-500 hover:underline'>Publication year</p>
+                            </div>
+                        </div>
+                        <div className='top-2 left-8 relative'>
+                            {/* <div className='top-2 relative'>
+                            <p>Genre</p>
+                            <p>Publication Year</p>
+                        </div> */}
+                        </div>
+                    </div>
                 </form>
             </div>
             <Navbar.Collapse>
