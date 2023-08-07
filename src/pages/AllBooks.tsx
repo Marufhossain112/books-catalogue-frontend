@@ -5,6 +5,7 @@ import { useGetBooksQuery } from '../redux/features/api/apiSlice';
 import { IBook } from '../interfaces/common';
 export default function AllBooks() {
     const { data, isLoading } = useGetBooksQuery(undefined);
+    console.log("AllBooks", data);
     if (isLoading) {
         // return <p>I am Loading</p>;
         return <div className='text-center'>

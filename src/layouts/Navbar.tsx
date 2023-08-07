@@ -47,9 +47,9 @@ export default function NavbarWithCTAButton() {
                                 Search
                             </Button>
                             <FaFilter></FaFilter>
-                            <div className="flex flex-col">
+                            {/* <div className="flex flex-col">
                                 <p className='text-stone-500 hover:underline'>Genre</p><p className='text-stone-500 hover:underline'>Publication year</p>
-                            </div>
+                            </div> */}
                         </div>
                         <div className='top-2 left-8 relative'>
                             {/* <div className='top-2 relative'>

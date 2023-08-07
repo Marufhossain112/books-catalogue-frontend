@@ -9,6 +9,9 @@ export const api = createApi({
         getBooks: builder.query({
             query: () => `books/all-books`,
         }),
+        getLatestBooks: builder.query({
+            query: () => `books/latest-books`,
+        }),
         getSingleBook: builder.query({
             query: (id) => `books/${id}`,
         }),
@@ -31,6 +34,6 @@ export const api = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation } = api;
+export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery } = api;
 
 
