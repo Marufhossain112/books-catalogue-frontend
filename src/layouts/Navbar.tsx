@@ -1,9 +1,10 @@
-import { Navbar } from 'flowbite-react';
+import { Button, Checkbox, Navbar, TextInput, Label } from 'flowbite-react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout } from '../redux/features/user/userSlice';
-
+import "./../styles/styles.css";
 export default function NavbarWithCTAButton() {
     const isLoggedIn = useAppSelector((state) => state.persistedReducer.isLoggedIn);
+
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
         dispatch(logout());
@@ -26,8 +27,22 @@ export default function NavbarWithCTAButton() {
                 </span>
             </Navbar.Brand>
             <div className="flex md:order-2">
-
                 <Navbar.Toggle />
+            </div>
+            <div className='order-3 '>
+                <form className="flex max-w-md gap-4">
+                    <div>
+                        <TextInput
+                            id="email1"
+                            placeholder="Search"
+                            required
+                            type="email"
+                        />
+                    </div>
+                    <Button type="submit">
+                        Search
+                    </Button>
+                </form>
             </div>
             <Navbar.Collapse>
                 <Navbar.Link

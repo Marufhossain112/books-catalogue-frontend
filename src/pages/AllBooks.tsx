@@ -30,7 +30,7 @@ export default function AllBooks() {
                     horizontal
                     imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
                     className='mx-auto mb-6 root'
-                    style={{ minHeight: "15rem", maxHeight: "15rem", minWidth: "25rem", maxWidth: "25rem", }}
+                    style={{ minWidth: "25rem", maxWidth: "25rem", }}
                 // style={{ height: "15rem", width: "25rem" }}
                 >
                     <div>
