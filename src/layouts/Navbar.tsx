@@ -1,6 +1,13 @@
 import { Navbar } from 'flowbite-react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { logout } from '../redux/features/user/userSlice';
 
 export default function NavbarWithCTAButton() {
+    const isLoggedIn = useAppSelector((state) => state.persistedReducer.isLoggedIn);
+    const dispatch = useAppDispatch();
+    const handleLogOut = () => {
+        dispatch(logout());
+    };
     return (
         <Navbar
             fluid
@@ -34,9 +41,16 @@ export default function NavbarWithCTAButton() {
                 <Navbar.Link href="/all-books">
                     All books
                 </Navbar.Link>
-                <Navbar.Link href="/signin">
-                    Sign in
-                </Navbar.Link>
+
+                {<>
+                    {isLoggedIn ? (
+                        <Navbar.Link onClick={handleLogOut}>Sign Out</Navbar.Link>
+                    ) : (
+                        <Navbar.Link href="/signin">Sign in</Navbar.Link>
+                    )}
+                    <Navbar.Link href="/signup">Sign Up</Navbar.Link>
+                </>}
+
                 <Navbar.Link href="/signup">
                     Sign Up
                 </Navbar.Link>

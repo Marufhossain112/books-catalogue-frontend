@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { api } from "./features/api/apiSlice";
 import userReducer from "./features/user/userSlice";
-
+import navbar from './features/navbar/navbar';
 // Persist configuration for the regular Redux store
 const reduxPersistConfig = {
     key: 'root', // Change this key if needed
@@ -11,10 +11,7 @@ const reduxPersistConfig = {
 };
 const rootReducer = userReducer;
 // Persist configuration for the RTK Query cache
-const rtkQueryPersistConfig = {
-    key: 'rtkQuery', // Change this key if needed
-    storage,
-};
+
 
 // Create the persisted reducer for the regular Redux store
 const persistedReducer = persistReducer(reduxPersistConfig, rootReducer);
@@ -22,6 +19,7 @@ const store = configureStore({
     reducer: {
         persistedReducer,
         // user: userReducer,
+        navbar: navbar,
         [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
