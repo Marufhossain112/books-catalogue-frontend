@@ -1,12 +1,26 @@
 'use client';
 
 import { Card, Spinner } from 'flowbite-react';
-import { useGetBooksQuery } from '../redux/features/api/apiSlice';
+
 import { IBook } from '../interfaces/common';
+import { useAppSelector } from '../redux/hooks';
+import { useFilterBooksByGenreFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useGetBooksQuery, useGetSearchedBooksFromAllQuery } from '../redux/features/api/apiSlice';
 export default function AllBooks() {
-    const { data, isLoading } = useGetBooksQuery(undefined);
-    console.log("AllBooks", data);
-    if (isLoading) {
+    const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
+    const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);
+    const isFilterPublicationYear = useAppSelector((state) => state.searchAndFilter.isFilterPublication);
+    const isFilterGenrePublicationYear = useAppSelector((state) => state.searchAndFilter.isFilterGenrePublication);
+    const FilterGenreValue = useAppSelector((state) => state.searchAndFilter.filterGenre);
+    const FilterPublicationValue = useAppSelector((state) => state.searchAndFilter.filterPublicationYear);
+    const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
+    console.log("TATATATATATAT", FilterGenrePublicationValue);
+    // console.log(FilterGenreValue);
+    const { data, isLoading: Loading } = useGetBooksQuery(undefined);
+    const { data: searchResponse, isLoading } = useGetSearchedBooksFromAllQuery(searchTerm);
+    const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreFromAllQuery(FilterGenreValue);
+    const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearFromAllQuery(FilterPublicationValue);
+    const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearFromAllQuery(FilterGenrePublicationValue);
+    if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {
         // return <p>I am Loading</p>;
         return <div className='text-center'>
             <Spinner
@@ -16,18 +30,32 @@ export default function AllBooks() {
         </div>;
 
     }
-
-    console.log("data", data?.data);
-    // eslint-disable-next-line no-unsafe-optional-chaining
-
-    // const { author, genre, imgUrl, publicationYear, title } = data.data;
-    const books = data.data;
-    // console.log('imgUrl', imgUrl);
+    console.log("both", GenrePublicationYearResponse);
+    let books;
+    if (isFilterGenrePublicationYear) {
+        books = GenrePublicationYearResponse.data;
+    }
+    else if (filterGenreResponse === "" || filterPublicationYearResponse === "") {
+        books = data.data;
+    } else if (isFilterGenre === true && filterGenreResponse != "") {
+        books = filterGenreResponse.data;
+    } else if (isFilterPublicationYear && filterPublicationYearResponse != "") {
+        books = filterPublicationYearResponse.data;
+    }
+    else if (isFilterGenre && isFilterPublicationYear) {
+        books = GenrePublicationYearResponse.data;
+        console.log("duitai true", books);
+    }
+    else {
+        books = searchResponse.data;
+    }
+    // const books = isFilterGenre ? : searchResponse.data;
     return (
         <div className='flex flex-wrap container mx-auto justify-center'>
             {books.map((book: IBook) => {
-                const { author, genre, publicationYear, title, imgUrl } = book;
+                const { author, genre, publicationYear, title, imgUrl, id } = book;
                 return (<Card
+                    key={id}
                     horizontal
                     imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
                     className='mx-auto mb-6 root'
@@ -40,11 +68,11 @@ export default function AllBooks() {
                                 {title}
                             </p>
                         </h5>
-                        <p className="font-normal text-gray-700 dark:text-gray-400">
+                        <div className="font-normal text-gray-700 dark:text-gray-400">
                             <p>
                                 {author}
                             </p>
-                        </p>
+                        </div>
                     </div>
                     <div>
                         <p><span className='font-bold'>Genre : </span>{genre}</p>

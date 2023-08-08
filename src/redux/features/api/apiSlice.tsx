@@ -18,17 +18,26 @@ export const api = createApi({
         getSearchedBooksFromLatest: builder.query({
             query: (value) => `books/all-books?limit=10&searchTerm=${value}`,
         }),
-        filterBooksByTitle: builder.query({
-            query: (title) => `books/all-books?limit=10&title=${title}`,
+        getSearchedBooksFromAll: builder.query({
+            query: (value) => `books/all-books?&searchTerm=${value}`,
         }),
         filterBooksByGenre: builder.query({
             query: (genre) => `books/all-books?limit=10&genre=${genre}`,
         }),
+        filterBooksByGenreFromAll: builder.query({
+            query: (genre) => `books/all-books?&genre=${genre}`,
+        }),
         filterBooksByPublicationYear: builder.query({
             query: (year) => `books/all-books?limit=10&publicationYear=${year}`,
         }),
+        filterBooksByPublicationYearFromAll: builder.query({
+            query: (year) => `books/all-books?&publicationYear=${year}`,
+        }),
         filterBooksByGenrePublicationYear: builder.query({
             query: ({ genre, publicationYear }) => `books/all-books?limit=10&genre=${encodeURIComponent(genre)}&publicationYear=${encodeURIComponent(publicationYear)}`,
+        }),
+        filterBooksByGenrePublicationYearFromAll: builder.query({
+            query: ({ genre, publicationYear }) => `books/all-books?&genre=${encodeURIComponent(genre)}&publicationYear=${encodeURIComponent(publicationYear)}`,
         }),
         postCreateUser: builder.mutation({
             query: (data) => ({
@@ -49,6 +58,6 @@ export const api = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByTitleQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery } = api;
+export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery, useGetSearchedBooksFromAllQuery, useFilterBooksByGenreFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery } = api;
 
 
