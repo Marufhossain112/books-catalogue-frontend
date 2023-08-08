@@ -5,8 +5,9 @@ import { FaFilter } from 'react-icons/fa';
 import "./../styles/styles.css";
 import { setFilterGenre, setFilterGenrePublicationYear, setFilterPublicationYear, setSearchTerm } from '../redux/features/searchFilters/action';
 import { useState } from 'react';
-import { useFilterBooksByGenrePublicationYearQuery } from '../redux/features/api/apiSlice';
+import { useNavigate } from 'react-router-dom';
 export default function NavbarWithCTAButton() {
+    const navigate = useNavigate();
     const [isFilterClick, setIsFilterClick] = useState(false);
     const [isGenreClick, setIsGenreClick] = useState(false);
     const [isPublicationYearClick, setIsPublicationYearClick] = useState(false);
@@ -18,6 +19,9 @@ export default function NavbarWithCTAButton() {
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
         dispatch(logout());
+    };
+    const handleAddBook = () => {
+        navigate('/new-book');
     };
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
@@ -107,10 +111,8 @@ export default function NavbarWithCTAButton() {
                             {isFilterClick && <div className="flex flex-col">
                                 <button onClick={handleGenreClick} className="flex gap-1"> <p className='text-stone-500 hover:underline'>Genre</p>
                                     {
-                                        // isGenreClick && <><form /* onSubmit={handleFilterGenreSubmit} */><input onChange={handleGenreChange} value={genre} type="text" style={{ height: "1.5rem", width: "5rem" }} /></form></>
-                                        // {
+
                                         isGenreClick && <input onChange={handleGenreChange} type="text" style={{ height: "1.5rem", width: "5rem" }} />
-                                        // }
                                     }
                                 </button>
                                 <button onClick={handlePublicationYear} className="flex gap-1 mt-1 ">  <p className='text-stone-500 hover:underline'>Publication year</p> {
@@ -139,7 +141,8 @@ export default function NavbarWithCTAButton() {
 
                 {<>
                     {isLoggedIn ? (
-                        <Navbar.Link onClick={handleLogOut}>Sign Out</Navbar.Link>
+                        <> <Navbar.Link onClick={handleAddBook}>Add Book</Navbar.Link>
+                            <Navbar.Link onClick={handleLogOut}>Sign Out</Navbar.Link></>
                     ) : (
                         <Navbar.Link href="/signin">Sign in</Navbar.Link>
                     )}

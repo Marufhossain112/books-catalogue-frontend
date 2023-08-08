@@ -2,18 +2,22 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 import { useState } from "react";
 import Toaster from "../components/Toast";
 import { IUser } from "../interfaces/common";
 
 export default function SignUp() {
-    const [isSuccess, setSuccess] = useState(false);
-    const [isFailed, setFailed] = useState("");
-    const [showCross, setShowCross] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [postCreateUser] = usePostCreateUserMutation();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IUser>();
+    const singupSuccessNotify = () => {
+        toast.success("User created successfully.");
+    };
+    const singupFailNotify = (error: string) => {
+        toast.error(error);
+    };
     const handleCheckboxChange = () => {
         setIsChecked((prevState) => !prevState);
     };
@@ -23,13 +27,12 @@ export default function SignUp() {
         await postCreateUser(data).unwrap().then((response) => {
             // console.log(response);
             if (response.statusCode === 200) {
-                setSuccess(true);
+                singupSuccessNotify();
             }
         }).catch((error) => {
             console.log('errors', error);
-            if (error.status === 406) {
-                setFailed(error?.data?.message);
-                setShowCross(true);
+            if (error) {
+                singupFailNotify(error?.data?.message);
             }
         });
         reset();
@@ -172,11 +175,12 @@ export default function SignUp() {
                         </Link>
                     </Label>
                 </div>
-                {isSuccess && <Toaster eventName="User created successfully" isPass={true} ></Toaster>}
-                {showCross && <Toaster eventName={isFailed} isPass={false} ></Toaster>}
+
                 <Button disabled={!isChecked} type="submit">
                     Register new account
                 </Button>
+                <ToastContainer></ToastContainer>
+
             </form >
         </>
 

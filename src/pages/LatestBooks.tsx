@@ -50,37 +50,39 @@ export default function LatestBooks() {
     }
     // const books = isFilterGenre ? : searchResponse.data;
     return (
-        <div className='flex flex-wrap container mx-auto justify-center'>
-            {books.map((book: IBook) => {
-                const { author, genre, publicationYear, title, imgUrl, id } = book;
-                return (<Card
-                    key={id}
-                    horizontal
-                    imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
-                    className='mx-auto mb-6 root'
-                    style={{ minWidth: "25rem", maxWidth: "25rem", }}
-                // style={{ height: "15rem", width: "25rem" }}
-                >
-                    <div>
-                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            <p>
-                                {title}
-                            </p>
-                        </h5>
-                        <div className="font-normal text-gray-700 dark:text-gray-400">
-                            <p>
-                                {author}
-                            </p>
+        <>
+            <h1 className='text-center text-3xl mb-2 underline'>Latest Books</h1>
+            <div className='flex flex-wrap container mx-auto justify-center'>
+                {books.map((book: IBook) => {
+                    const { author, genre, publicationYear, title, imgUrl, id } = book;
+                    return (<Card
+                        key={id}
+                        horizontal
+                        imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
+                        className='mx-auto mb-6 root'
+                        style={{ minWidth: "25rem", maxWidth: "25rem", }}
+                    // style={{ height: "15rem", width: "25rem" }}
+                    >
+                        <div>
+                            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                <p>
+                                    {title}
+                                </p>
+                            </h5>
+                            <div className="font-normal text-gray-700 dark:text-gray-400">
+                                <p>
+                                    {author}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <p><span className='font-bold'>Genre : </span>{genre}</p>
-                        <p><span className='font-bold'>Released : </span>{publicationYear}</p>
-                    </div>
-                </Card>);
-            }
-            )}
-        </div >
+                        <div>
+                            <p><span className='font-bold'>Genre : </span>{genre}</p>
+                            <p><span className='font-bold'>Released : </span>{publicationYear}</p>
+                        </div>
+                    </Card>);
+                }
+                )}
+            </div ></>
     );
 }
 
