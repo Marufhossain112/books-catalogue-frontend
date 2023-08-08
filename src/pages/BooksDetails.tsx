@@ -1,26 +1,45 @@
 
-import { Card } from 'flowbite-react';
+import { Card, Spinner } from 'flowbite-react';
+import { useGetSingleBookQuery } from '../redux/features/api/apiSlice';
+import { useParams } from 'react-router-dom';
 export default function BooksDetails() {
+    const { id } = useParams();
+    const { data, isLoading } = useGetSingleBookQuery(id);
+    console.log("My data", data);
+    // handle loading
+    if (isLoading) {
+        return <div className='text-center'>
+            <Spinner
+                aria-label="Extra large spinner example"
+                size="xl"
+            />
+        </div>;
+    }
+    const { imgUrl, title, author, genre, publicationYear } = data.data;
     return (
-        <>
-            <Card
-                horizontal
-                imgSrc="/src/assets/images/book1.png"
-                className='mx-auto mb-6'
-            >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <Card
+            horizontal
+            imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
+            className='mx-auto mb-6 root'
+            style={{ minWidth: "25rem", maxWidth: "25rem", }}
+        >
+            <div className='md:pt-14'>
+                <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                     <p>
-                        Noteworthy technology acquisitions 2021
+                        {title}
                     </p>
                 </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
+                <div className="font-normal text-gray-700 dark:text-gray-400">
                     <p>
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+                        {author}
                     </p>
-                </p>
-            </Card>
-            {/* <p className='text-center text-3xl underline mb-4'>Reviews</p> */}
-        </>
+                </div>
+            </div>
+            <div>
+                <p><span className='font-bold'>Genre : </span>{genre}</p>
+                <p><span className='font-bold'>Released : </span>{publicationYear}</p>
+            </div>
+        </Card>
 
     );
 }

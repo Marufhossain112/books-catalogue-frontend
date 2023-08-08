@@ -4,6 +4,7 @@ import { Card, Spinner } from 'flowbite-react';
 import { useFilterBooksByGenrePublicationYearQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
 import { IBook } from '../interfaces/common';
 import { useAppSelector } from '../redux/hooks';
+import { useNavigate } from 'react-router-dom';
 export default function LatestBooks() {
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
     const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);
@@ -12,13 +13,14 @@ export default function LatestBooks() {
     const FilterGenreValue = useAppSelector((state) => state.searchAndFilter.filterGenre);
     const FilterPublicationValue = useAppSelector((state) => state.searchAndFilter.filterPublicationYear);
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
-    console.log("TATATATATATAT", FilterGenrePublicationValue);
+    // console.log("TATATATATATAT", FilterGenrePublicationValue);
     // console.log(FilterGenreValue);
     const { data, isLoading: Loading } = useGetLatestBooksQuery(undefined);
     const { data: searchResponse, isLoading } = useGetSearchedBooksFromLatestQuery(searchTerm);
     const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreQuery(FilterGenreValue);
     const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearQuery(FilterPublicationValue);
     const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearQuery(FilterGenrePublicationValue);
+    const navigate = useNavigate();
     if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {
         // return <p>I am Loading</p>;
         return <div className='text-center'>
@@ -27,7 +29,6 @@ export default function LatestBooks() {
                 size="xl"
             />
         </div>;
-
     }
     console.log("both", GenrePublicationYearResponse);
     let books;
@@ -49,13 +50,14 @@ export default function LatestBooks() {
         books = searchResponse.data;
     }
     // const books = isFilterGenre ? : searchResponse.data;
+    // console.log("mama data niba data", data.data);
     return (
         <>
             <h1 className='text-center text-3xl mb-2 underline'>Latest Books</h1>
             <div className='flex flex-wrap container mx-auto justify-center'>
                 {books.map((book: IBook) => {
-                    const { author, genre, publicationYear, title, imgUrl, id } = book;
-                    return (<Card
+                    const { author, genre, publicationYear, title, imgUrl, id, _id } = book;
+                    return (<Card onClick={() => navigate(`/books/${_id}`)}
                         key={id}
                         horizontal
                         imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}

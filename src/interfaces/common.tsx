@@ -13,6 +13,7 @@ export interface ILoginUser {
     password: string;
 }
 export type IBook = {
+    _id: string;
     id: string;
     title: string;
     author: string;

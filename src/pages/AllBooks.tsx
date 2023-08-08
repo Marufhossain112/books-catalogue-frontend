@@ -1,10 +1,10 @@
 'use client';
 
 import { Card, Spinner } from 'flowbite-react';
-
 import { IBook } from '../interfaces/common';
 import { useAppSelector } from '../redux/hooks';
 import { useFilterBooksByGenreFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useGetBooksQuery, useGetSearchedBooksFromAllQuery } from '../redux/features/api/apiSlice';
+import { useNavigate } from 'react-router-dom';
 export default function AllBooks() {
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
     const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);
@@ -13,8 +13,9 @@ export default function AllBooks() {
     const FilterGenreValue = useAppSelector((state) => state.searchAndFilter.filterGenre);
     const FilterPublicationValue = useAppSelector((state) => state.searchAndFilter.filterPublicationYear);
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
-    console.log("TATATATATATAT", FilterGenrePublicationValue);
+    // console.log("TATATATATATAT", FilterGenrePublicationValue);
     // console.log(FilterGenreValue);
+    const navigate = useNavigate();
     const { data, isLoading: Loading } = useGetBooksQuery(undefined);
     const { data: searchResponse, isLoading } = useGetSearchedBooksFromAllQuery(searchTerm);
     const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreFromAllQuery(FilterGenreValue);
@@ -55,8 +56,9 @@ export default function AllBooks() {
             <h1 className='text-center text-3xl mb-2 underline'>All Books</h1>
             <div className='flex flex-wrap container mx-auto justify-center'>
                 {books.map((book: IBook, index: number) => {
-                    const { author, genre, publicationYear, title, imgUrl } = book;
+                    const { author, genre, publicationYear, title, imgUrl, _id } = book;
                     return (<Card
+                        onClick={() => navigate(`/books/${_id}`)}
                         key={index}
                         horizontal
                         imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}

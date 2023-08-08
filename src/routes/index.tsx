@@ -8,9 +8,6 @@ import BooksDetails from "../pages/BooksDetails";
 import Home from "../pages/Home";
 import AllBooks from "../pages/AllBooks";
 import AddBook from "../pages/AddBook";
-import { Toastify } from "../pages/Toastify";
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -26,16 +23,12 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: '/books-details',
+        path: '/books/:id',
         element: <BooksDetails></BooksDetails>
       },
       {
         path: '/new-book',
         element: <AddBook></AddBook>
-      },
-      {
-        path: '/toast',
-        element: <Toastify></Toastify>
       },
     ]
   },
