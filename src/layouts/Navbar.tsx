@@ -1,41 +1,74 @@
-import { Button, Navbar, TextInput } from 'flowbite-react';
+import { Navbar, TextInput } from 'flowbite-react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout } from '../redux/features/user/userSlice';
 import { FaFilter } from 'react-icons/fa';
-
 import "./../styles/styles.css";
-// import { useState } from 'react';
-// import { useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
-import { setSearchTerm } from '../redux/features/searchFilters/action';
-// import { useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
+import { setFilterGenre, setFilterGenrePublicationYear, setFilterPublicationYear, setSearchTerm } from '../redux/features/searchFilters/action';
+import { useState } from 'react';
+import { useFilterBooksByGenrePublicationYearQuery } from '../redux/features/api/apiSlice';
 export default function NavbarWithCTAButton() {
-    // const [searchTerm, setSearchTerm] = useState('');
+    const [isFilterClick, setIsFilterClick] = useState(false);
+    const [isGenreClick, setIsGenreClick] = useState(false);
+    const [isPublicationYearClick, setIsPublicationYearClick] = useState(false);
+    const [genre, setGenreValue] = useState('');
+    const [publicationYear, setPublicationYearValue] = useState('');
+    // const [publicationYearValue, setPubli] = useState('');
     const isLoggedIn = useAppSelector((state) => state.persistedReducer.isLoggedIn);
-    // const handleInputChange = (event) => {
-    //     setSearchTerm(event.target.value);
-    // };
-    // const { data } = useGetSearchedBooksFromLatestQuery(searchTerm);
-    // console.log('')
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     console.log('Input value:', searchTerm);
-    //     // You can perform further actions with the input value here
-    //     setSearchTerm("");
-    // };
+    // const isFilterGenrePublication = useAppSelector((state) => state.searchAndFilter.isFilterGenrePublication);
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
         dispatch(logout());
     };
-
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
         dispatch(setSearchTerm(searchTerm));
-    };
 
-    // const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const filterTitle = event.target.value;
-    //     dispatch(setFilterTitle(filterTitle));
-    // };
+    };
+    const handleGenreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // event.preventDefault();
+        // const newGenreValue = event.target.value;
+        // setGenreValue(newGenreValue);
+        const genreValue = event.target.value;
+        setGenreValue(genreValue);
+        dispatch(setFilterGenre(genreValue));
+    };
+    // console.log("Genre value", genreValue);
+
+    const handlePublicationYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const publicationYearValue = event.target.value;
+        setPublicationYearValue(publicationYearValue);
+        dispatch(setFilterPublicationYear(publicationYearValue));
+    };
+    const handleFilters = () => {
+        setIsFilterClick(true);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleGenreClick = (e: any) => {
+        e.preventDefault();
+        setIsGenreClick(true);
+        // dispatch(setFilterGenre(genreValue));
+
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handlePublicationYear = (e: any) => {
+        e.preventDefault();
+        setIsPublicationYearClick(true);
+    };
+    const handleGenrePublicationYear = (e: any) => {
+        e.preventDefault();
+        if (genre == "") {
+            dispatch(setFilterPublicationYear(publicationYear));
+            console.log(1);
+        }
+        else if (publicationYear == "") {
+            dispatch(setFilterGenre(genre));
+            console.log(2);
+        } else {
+            dispatch(setFilterGenrePublicationYear({ genre, publicationYear }));
+            console.log(3);
+        }
+    };
+    // useFilterBooksByGenrePublicationYearQuery()
     return (
         <Navbar
             fluid
@@ -49,7 +82,7 @@ export default function NavbarWithCTAButton() {
                         src="/src/assets/images/book1.png"
                     />
                 </div>
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white ">
                     Books Zone
                 </span>
             </Navbar.Brand>
@@ -62,30 +95,35 @@ export default function NavbarWithCTAButton() {
                         <TextInput
                             id="email1"
                             placeholder="Search..."
-                            required
+                            // required
                             type="text"
                             onChange={handleSearchChange}
                         />
                     </div>
                     <div>
-                        <div className='flex items-center gap-2'>
-                            {/* <Button type="submit">
-                                Search
-                            </Button> */}
-                            <FaFilter></FaFilter>
-                            {/* <div className="flex flex-col">
-                                <p className='text-stone-500 hover:underline'>Genre</p><p className='text-stone-500 hover:underline'>Publication year</p>
-                            </div> */}
+                        <div className={!isFilterClick ? `flex items-center  gap-2 relative top-3` : `flex items-center  gap-2 `}>
+
+                            <FaFilter onClick={handleFilters}></FaFilter>
+                            {isFilterClick && <div className="flex flex-col">
+                                <button onClick={handleGenreClick} className="flex gap-1"> <p className='text-stone-500 hover:underline'>Genre</p>
+                                    {
+                                        // isGenreClick && <><form /* onSubmit={handleFilterGenreSubmit} */><input onChange={handleGenreChange} value={genre} type="text" style={{ height: "1.5rem", width: "5rem" }} /></form></>
+                                        // {
+                                        isGenreClick && <input onChange={handleGenreChange} type="text" style={{ height: "1.5rem", width: "5rem" }} />
+                                        // }
+                                    }
+                                </button>
+                                <button onClick={handlePublicationYear} className="flex gap-1 mt-1 ">  <p className='text-stone-500 hover:underline'>Publication year</p> {
+                                    isPublicationYearClick && <input onChange={handlePublicationYearChange} type="text" style={{ height: "1.5rem", width: "5rem" }} />
+                                }</button>
+
+                                <button className='outline mt-1' onClick={handleGenrePublicationYear}>Filter</button>
+                            </div>}
                         </div>
-                        <div className='top-2 left-8 relative'>
-                            {/* <div className='top-2 relative'>
-                            <p>Genre</p>
-                            <p>Publication Year</p>
-                        </div> */}
-                        </div>
+
                     </div>
                 </form>
-            </div>
+            </div >
             <Navbar.Collapse>
                 <Navbar.Link
                     active
@@ -111,7 +149,7 @@ export default function NavbarWithCTAButton() {
                     Sign Up
                 </Navbar.Link>
             </Navbar.Collapse>
-        </Navbar>
+        </Navbar >
     );
 }
 

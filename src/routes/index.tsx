@@ -7,7 +7,7 @@ import Books from "../pages/AllBooks";
 import BooksDetails from "../pages/BooksDetails";
 import Home from "../pages/Home";
 import AllBooks from "../pages/AllBooks";
-import LatestBooks from "../pages/LatestBooks";
+
 
 export const router = createBrowserRouter([
   {
@@ -22,10 +22,7 @@ export const router = createBrowserRouter([
         path: '/all-books',
         element: <AllBooks></AllBooks>
       },
-      {
-        path: '/latest-books',
-        element: <LatestBooks></LatestBooks>
-      },
+
       {
         path: '/books-details',
         element: <BooksDetails></BooksDetails>

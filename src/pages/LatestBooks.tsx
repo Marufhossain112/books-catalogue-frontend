@@ -1,17 +1,25 @@
 'use client';
 
 import { Card, Spinner } from 'flowbite-react';
-import { useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
+import { useFilterBooksByGenrePublicationYearQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
 import { IBook } from '../interfaces/common';
 import { useAppSelector } from '../redux/hooks';
 export default function LatestBooks() {
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
+    const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);
+    const isFilterPublicationYear = useAppSelector((state) => state.searchAndFilter.isFilterPublication);
+    const isFilterGenrePublicationYear = useAppSelector((state) => state.searchAndFilter.isFilterGenrePublication);
+    const FilterGenreValue = useAppSelector((state) => state.searchAndFilter.filterGenre);
+    const FilterPublicationValue = useAppSelector((state) => state.searchAndFilter.filterPublicationYear);
+    const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
+    console.log("TATATATATATAT", FilterGenrePublicationValue);
+    // console.log(FilterGenreValue);
+    const { data, isLoading: Loading } = useGetLatestBooksQuery(undefined);
     const { data: searchResponse, isLoading } = useGetSearchedBooksFromLatestQuery(searchTerm);
-    // console.log('Lalalala', searchResponse?.data);
-    // const { data, isLoading } = useGetLatestBooksQuery(undefined);
-    // console.log('latest data', data);
-    // console.log("data");
-    if (isLoading) {
+    const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreQuery(FilterGenreValue);
+    const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearQuery(FilterPublicationValue);
+    const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearQuery(FilterGenrePublicationValue);
+    if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {
         // return <p>I am Loading</p>;
         return <div className='text-center'>
             <Spinner
@@ -21,20 +29,26 @@ export default function LatestBooks() {
         </div>;
 
     }
-
-    // console.log("data", data?.data);
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    // searchResponse.data.map(n => console.log('mapping cholse', n));
-    // const { author, genre, imgUrl, publicationYear, title } = data.data;
-    // let books;
-    // // const books = searchResponse.data && searchResponse.data;
-    // if (searchResponse.data != undefined) {
-    //     books = searchResponse.data;
-    // } else {
-    //     books = data.data;
-    // }
-    // console.log('imgUrl', imgUrl);
-    const books = searchResponse.data;
+    console.log("both", GenrePublicationYearResponse);
+    let books;
+    if (isFilterGenrePublicationYear) {
+        books = GenrePublicationYearResponse.data;
+    }
+    else if (filterGenreResponse === "" || filterPublicationYearResponse === "") {
+        books = data.data;
+    } else if (isFilterGenre === true && filterGenreResponse != "") {
+        books = filterGenreResponse.data;
+    } else if (isFilterPublicationYear && filterPublicationYearResponse != "") {
+        books = filterPublicationYearResponse.data;
+    }
+    else if (isFilterGenre && isFilterPublicationYear) {
+        books = GenrePublicationYearResponse.data;
+        console.log("duitai true", books);
+    }
+    else {
+        books = searchResponse.data;
+    }
+    // const books = isFilterGenre ? : searchResponse.data;
     return (
         <div className='flex flex-wrap container mx-auto justify-center'>
             {books.map((book: IBook) => {
