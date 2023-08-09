@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 export interface IUser {
     name: string;
     email: string;
@@ -25,7 +24,7 @@ export type IBook = {
 export type IReview = {
     title: string;
     body: string;
-    rating: string;
+    rating: number;
     author: string;
-    book: Types.ObjectId | IBook;
+    book: string;
 };

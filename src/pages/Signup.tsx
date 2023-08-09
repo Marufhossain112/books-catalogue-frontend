@@ -5,7 +5,6 @@ import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useState } from "react";
-import Toaster from "../components/Toast";
 import { IUser } from "../interfaces/common";
 
 export default function SignUp() {
