@@ -8,3 +8,9 @@ nav ul {
     left: 0rem;
   }
 }
+.gold-star {
+  color: gold;
+}
+.white-star {
+  color: rgb(236, 231, 231);
+}

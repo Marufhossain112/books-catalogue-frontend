@@ -53,7 +53,7 @@ export default function AllBooks() {
     // const books = isFilterGenre ? : searchResponse.data;
     return (
         <>
-            <h1 className='text-center text-3xl mb-2 underline'>All Books</h1>
+            <h1 className='text-center text-3xl mb-5 underline'>All Books</h1>
             <div className='flex flex-wrap container mx-auto justify-center'>
                 {books.map((book: IBook, index: number) => {
                     const { author, genre, publicationYear, title, imgUrl, _id } = book;

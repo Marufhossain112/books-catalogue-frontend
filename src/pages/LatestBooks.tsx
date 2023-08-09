@@ -53,7 +53,7 @@ export default function LatestBooks() {
     // console.log("mama data niba data", data.data);
     return (
         <>
-            <h1 className='text-center text-3xl mb-2 underline'>Latest Books</h1>
+            <h1 className='text-center text-3xl mb-5 underline'>Latest Books</h1>
             <div className='flex flex-wrap container mx-auto justify-center'>
                 {books.map((book: IBook) => {
                     const { author, genre, publicationYear, title, imgUrl, id, _id } = book;

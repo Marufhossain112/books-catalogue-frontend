@@ -15,6 +15,9 @@ export const api = createApi({
         getSingleBook: builder.query({
             query: (id) => `books/${id}`,
         }),
+        getSingleBookReview: builder.query({
+            query: (id) => `/review-api/reviews/${id}`,
+        }),
         getSearchedBooksFromLatest: builder.query({
             query: (value) => `books/all-books?limit=10&searchTerm=${value}`,
         }),
@@ -65,6 +68,6 @@ export const api = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery, useGetSearchedBooksFromAllQuery, useFilterBooksByGenreFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, usePostCreateBookMutation } = api;
+export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery, useGetSearchedBooksFromAllQuery, useFilterBooksByGenreFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, usePostCreateBookMutation, useGetSingleBookReviewQuery } = api;
 
 
