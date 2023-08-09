@@ -1,5 +1,5 @@
 
-import { Card, Spinner, Rating } from 'flowbite-react';
+import { Card, Spinner } from 'flowbite-react';
 import { useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/api/apiSlice';
 import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
@@ -46,43 +46,43 @@ export default function BooksDetails() {
                     <p><span className='font-bold'>Released : </span>{publicationYear}</p>
                 </div>
             </Card>
-            {
-                !reviewsList.length ? <h1 className='text-center text-xl  mb-4 '>No reviews yet,click add review button to add a review </h1> : <>
-                    <h1 className='text-center text-3xl underline mb-4 '>Reviews</h1>
-                    {reviewsList.map((review: IReview, index: number) => {
-                        const { author, body, title, rating } = review;
-                        return (<Card
-                            key={index}
-                            horizontal
-                            className='mx-auto mb-6 root'
-                            style={{ minWidth: "25rem", maxWidth: "25rem", }}
-                        // style={{ height: "15rem", width: "25rem" }}
-                        >
-                            <div>
-                                <div className='flex'>
-                                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mr-40">
-                                        {author}
-                                    </h5>
-                                    <ReviewRating  userRating={rating}></ReviewRating>
-                                </div>
-                                <div className="font-semibold text-gray-700 dark:text-gray-400">
-                                    <p>
-                                        {title}
-                                    </p>
-                                </div>
-                                <div className="font-normal text-gray-700 dark:text-gray-400">
-                                    <p>
-                                        {body}
-                                    </p>
-                                </div>
+            {!reviewsList.length ? <h1 className='text-center text-xl  mb-4 '>No reviews yet,click add review button to add a review </h1> : <>
+                <h1 className='text-center text-3xl underline mb-4 '>Reviews</h1>
+                {reviewsList.map((review: IReview, index: number) => {
+                    const { author, body, title, rating } = review;
+                    return (<Card
+                        key={index}
+                        horizontal
+                        className='mx-auto mb-6 root'
+                        style={{ minWidth: "25rem", maxWidth: "25rem", }}
+                    >
+                        <div>
+                            <div className='flex'>
+                                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mr-40">
+                                    {author}
+                                </h5>
+                                <ReviewRating userRating={rating}></ReviewRating>
                             </div>
-                            <div>
-
+                            <div className="font-semibold text-gray-700 dark:text-gray-400">
+                                <p>
+                                    {title}
+                                </p>
                             </div>
-                        </Card>);
-                    }
-                    )}
-                </>
+                            <div className="font-normal text-gray-700 dark:text-gray-400">
+                                <p>
+                                    {body}
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                    </Card>);
+                }
+                )}
+                <div className='text-center'>
+                    <button className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
+                </div>
+            </>
             }
 
         </>
