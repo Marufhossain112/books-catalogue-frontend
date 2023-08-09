@@ -4,7 +4,12 @@ import { useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/fea
 import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 import ReviewRating from '../components/ReviewRating';
+import { useState } from 'react';
+import AddReview from '../components/AddReview';
 export default function BooksDetails() {
+    const [openModal, setOpenModal] = useState(false);
+    // const navigate = useNavigate();
+
     const { id } = useParams();
     const { data, isLoading } = useGetSingleBookQuery(id);
     const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id);
@@ -20,7 +25,11 @@ export default function BooksDetails() {
     }
     const { imgUrl, title, author, genre, publicationYear } = data.data;
     const reviewsList = reviews.data;
-
+    const handleAddReview = () => {
+        // OpenModal();
+        // navigate('/add-review');
+        setOpenModal(true);
+    };
     return (
         <>
             <Card
@@ -80,8 +89,9 @@ export default function BooksDetails() {
                 }
                 )}
                 <div className='text-center'>
-                    <button className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
+                    <button onClick={handleAddReview} className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
                 </div>
+                <AddReview openModal={openModal} setOpenModal={setOpenModal} />
             </>
             }
 
