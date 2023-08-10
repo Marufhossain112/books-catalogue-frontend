@@ -4,11 +4,14 @@ import { usePostLoginUserMutation } from "../redux/features/api/apiSlice";
 import { ILoginUser } from "../interfaces/common";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/features/user/userSlice";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
     const dispatch = useAppDispatch();
     const [postLoginUser] = usePostLoginUserMutation(undefined);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginUser>();
+    // toast message
+
     // submit the form
     const onSubmit: SubmitHandler<ILoginUser> = async (data) => {
         await postLoginUser(data).unwrap().then((response) => {
@@ -17,15 +20,13 @@ export default function SignIn() {
                 const user = data.email;
                 const token = response.data.accessToken;
                 dispatch(login({ user, token }));
+                toast.success(response.message);
+                reset();
             }
         }).catch((error) => {
             console.log('errors', error);
-            if (error.status === 406) {
-                // setFailed(error?.data?.message);
-                // setShowCross(true);
-            }
+            toast.error(error.data.message);
         });
-        reset();
     };
     return (
         <>

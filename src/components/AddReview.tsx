@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 // import { useState } from 'react';
 import { usePostCreateReviewMutation } from '../redux/features/api/apiSlice';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { addReview } from '../redux/features/Review/reviewSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 // import { useParams } from 'react-router-dom';
@@ -91,7 +91,6 @@ export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
                                 <Button type="submit">Post a review</Button>
                             </div>
                         </div>
-                        <ToastContainer></ToastContainer>
                     </form>
                 </Modal.Body>
             </Modal>

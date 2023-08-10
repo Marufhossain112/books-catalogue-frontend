@@ -97,9 +97,7 @@ export default function BooksDetails() {
             </>
             }
             <AddReview openModal={openModal} setOpenModal={setOpenModal} />
-
         </>
-
     );
 }
 

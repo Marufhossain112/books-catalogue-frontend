@@ -100,7 +100,6 @@ export default function SignUp() {
                     <select {...register("gender")}>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="other">Other</option>
                     </select>
                 </div>
                 {/* BloodGroup */}
@@ -178,7 +177,7 @@ export default function SignUp() {
                 <Button disabled={!isChecked} type="submit">
                     Register new account
                 </Button>
-                <ToastContainer></ToastContainer>
+                <ToastContainer />
 
             </form >
         </>
