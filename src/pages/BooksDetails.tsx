@@ -12,8 +12,8 @@ export default function BooksDetails() {
 
     const { id } = useParams();
     const { data, isLoading } = useGetSingleBookQuery(id);
-    const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id);
-    console.log("My reviews", reviews);
+    const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id, { refetchOnMountOrArgChange: true });
+    // console.log("My reviews", reviews);
     // handle loading
     if (isLoading || reviewLoading) {
         return <div className='text-center'>
@@ -55,7 +55,9 @@ export default function BooksDetails() {
                     <p><span className='font-bold'>Released : </span>{publicationYear}</p>
                 </div>
             </Card>
-            {!reviewsList.length ? <h1 className='text-center text-xl  mb-4 '>No reviews yet,click add review button to add a review </h1> : <>
+            {!reviewsList.length ? <> <h1 className='text-center text-lg   mb-4 '>No reviews yet,click add review button to add a review </h1>  <div className='text-center'>
+                <button onClick={handleAddReview} className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
+            </div> </> : <>
                 <h1 className='text-center text-3xl underline mb-4 '>Reviews</h1>
                 {reviewsList.map((review: IReview, index: number) => {
                     const { author, body, title, rating } = review;
@@ -91,9 +93,10 @@ export default function BooksDetails() {
                 <div className='text-center'>
                     <button onClick={handleAddReview} className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
                 </div>
-                <AddReview openModal={openModal} setOpenModal={setOpenModal} />
+
             </>
             }
+            <AddReview openModal={openModal} setOpenModal={setOpenModal} />
 
         </>
 

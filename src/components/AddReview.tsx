@@ -1,29 +1,51 @@
 'use client';
-
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
-import { useState } from 'react';
+// import { useState } from 'react';
+import { usePostCreateReviewMutation } from '../redux/features/api/apiSlice';
+import { toast, ToastContainer } from 'react-toastify';
+import { addReview } from '../redux/features/Review/reviewSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 // import { useParams } from 'react-router-dom';
 interface AddReviewProps {
     openModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
-// interface IReviewData {
-//     [key: string]: any; // You might want to use a more specific type than "any"
-// }
-
 
 export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
-    const [storeReview, setStoreReview] = useState({});
     const { id: book } = useParams();
-    const { register, handleSubmit, formState: { errors } } = useForm<IReview>();
-
-    const reviewSubmit = (data: IReview) => {
-        setStoreReview({ ...data, book });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IReview>();
+    // use mutation hook for creating review
+    const [postCreateReview] = usePostCreateReviewMutation();
+    // toast messages
+    const reviewCreateSuccessNotify = () => {
+        toast.success("Review created successfully.");
     };
-    console.log("review data", storeReview);
+    const reviewCreateErrorNotify = (error: string) => {
+        toast.error(error);
+    };
+    const reviews = useAppSelector((state) => state.storedReviews.reviews);
+    console.log('from store', reviews);
+    const dispatch = useAppDispatch();
+
+    const reviewSubmit: SubmitHandler<IReview> = async (data: IReview) => {
+        // const rating = (data.rating);
+        dispatch(addReview({ ...data, book }));
+        await postCreateReview({ ...data, book }).unwrap().then((response) => {
+            console.log(response);
+            if (response.statusCode === 200) {
+                reviewCreateSuccessNotify();
+            }
+        }).catch((error) => {
+            console.log('errors', error);
+            if (error) {
+                reviewCreateErrorNotify(error?.data?.message);
+            }
+        });
+        reset();
+    };
 
     return (
         <>
@@ -51,7 +73,7 @@ export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
                                 <div className="mb-2 block">
                                     <Label htmlFor="rating" value="Review rating" />
                                 </div>
-                                <TextInput id="rating" placeholder='Rate 1 to 5' type="number" required {...register("rating", {
+                                <TextInput id="rating" placeholder='Rate 1 to 5' type="text" required {...register("rating", {
                                     required: 'Rating is required', min: { value: 1, message: "Rating must be at least 1" },
                                     max: { value: 5, message: "Rating must be at most 5" },
                                 })} />
@@ -69,6 +91,7 @@ export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
                                 <Button type="submit">Post a review</Button>
                             </div>
                         </div>
+                        <ToastContainer></ToastContainer>
                     </form>
                 </Modal.Body>
             </Modal>

@@ -5,7 +5,7 @@ import { ILoginUser } from "../interfaces/common";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/features/user/userSlice";
 
-export default function Signin() {
+export default function SignIn() {
     const dispatch = useAppDispatch();
     const [postLoginUser] = usePostLoginUserMutation(undefined);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginUser>();

@@ -2,12 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
 import App from "../App";
-import Signin from "../pages/Signin";
 import Books from "../pages/AllBooks";
 import BooksDetails from "../pages/BooksDetails";
 import Home from "../pages/Home";
 import AllBooks from "../pages/AllBooks";
 import AddBook from "../pages/AddBook";
+import SignIn from "../pages/Signin";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <Signin></Signin>
+    element: <SignIn></SignIn>
   },
   {
     path: "/books",

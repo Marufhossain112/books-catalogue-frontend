@@ -6,10 +6,8 @@ import { IBook } from "../interfaces/common";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function AddBook() {
-
     const [postCreateBook] = usePostCreateBookMutation();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBook>();
-
     // toast messages
     const bookCreateSuccessNotify = () => {
         toast.success("Book created successfully.");
@@ -22,10 +20,9 @@ export default function AddBook() {
     const onSubmit: SubmitHandler<IBook> = async (data) => {
         console.log('receive data', data);
         await postCreateBook(data).unwrap().then((response) => {
-            console.log(response);
+            // console.log(response);
             if (response.statusCode === 200) {
                 bookCreateSuccessNotify();
-                // const notify = () => toast("Wow so easy!");
             }
         }).catch((error) => {
             console.log('errors', error);

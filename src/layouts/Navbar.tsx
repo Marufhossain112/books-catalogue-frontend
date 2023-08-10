@@ -58,6 +58,7 @@ export default function NavbarWithCTAButton() {
         e.preventDefault();
         setIsPublicationYearClick(true);
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleGenrePublicationYear = (e: any) => {
         e.preventDefault();
         if (genre == "") {
