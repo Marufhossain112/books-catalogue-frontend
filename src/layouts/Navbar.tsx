@@ -1,3 +1,4 @@
+import logo from "/src/assets/images/book1.png";
 import { Navbar, TextInput } from 'flowbite-react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout } from '../redux/features/user/userSlice';
@@ -84,7 +85,7 @@ export default function NavbarWithCTAButton() {
                     <img
                         alt="Books Logo"
                         className="mr-0  h-20 "
-                        src="/src/assets/images/book1.png"
+                        src={logo}
                     />
                 </div>
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white ">
