@@ -25,8 +25,7 @@ export default function BooksDetails() {
     const [deleteSingleBook] = useDeleteSingleBookMutation();
     // handle edit button    
     const handleEditBook = () => {
-        setOpenModal(true);
-
+        setOpenEditModal(true);
     };
     // handle delete button
     const handleDeleteBook = async () => {
