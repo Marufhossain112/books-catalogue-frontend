@@ -1,12 +1,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Label, TextInput } from 'flowbite-react';
-import { usePostLoginUserMutation } from "../redux/features/api/apiSlice";
 import { ILoginUser } from "../interfaces/common";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../redux/features/user/userSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePostLoginUserMutation } from "../redux/features/user/userApi";
 
 export default function SignIn() {
     const { isLoggedIn } = useAppSelector((state) => state.persistedReducer);

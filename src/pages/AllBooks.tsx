@@ -3,8 +3,10 @@
 import { Card, Spinner } from 'flowbite-react';
 import { IBook } from '../interfaces/common';
 import { useAppSelector } from '../redux/hooks';
-import { useFilterBooksByGenreFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useGetBooksQuery, useGetSearchedBooksFromAllQuery } from '../redux/features/api/apiSlice';
+
 import { useNavigate } from 'react-router-dom';
+import { useGetBooksQuery } from '../redux/features/books/booksApi';
+import { useFilterBooksByGenreFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useGetSearchedBooksFromAllQuery } from '../redux/features/searchFilters/searchFilterApi';
 export default function AllBooks() {
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
     const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);

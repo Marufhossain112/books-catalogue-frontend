@@ -1,10 +1,12 @@
 'use client';
 
 import { Card, Spinner } from 'flowbite-react';
-import { useFilterBooksByGenrePublicationYearQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery } from '../redux/features/api/apiSlice';
+
 import { IBook } from '../interfaces/common';
 import { useAppSelector } from '../redux/hooks';
 import { useNavigate } from 'react-router-dom';
+import { useGetLatestBooksQuery } from '../redux/features/books/booksApi';
+import { useFilterBooksByGenrePublicationYearQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useGetSearchedBooksFromLatestQuery } from '../redux/features/searchFilters/searchFilterApi';
 export default function LatestBooks() {
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
     const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);

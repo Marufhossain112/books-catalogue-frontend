@@ -4,10 +4,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 // import { useState } from 'react';
-import { usePostCreateReviewMutation } from '../redux/features/api/apiSlice';
 import { toast } from 'react-toastify';
 import { addReview } from '../redux/features/Review/reviewSlice';
 import { useAppDispatch } from '../redux/hooks';
+import { usePostCreateReviewMutation } from '../redux/features/Review/reviewApi';
 // import { useParams } from 'react-router-dom';
 type AddReviewProps = {
     openModal: boolean;

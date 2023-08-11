@@ -3,8 +3,8 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { IBook } from '../interfaces/common';
-import { usePostEditBookMutation } from '../redux/features/api/apiSlice';
 import { toast } from 'react-toastify';
+import { usePostEditBookMutation } from '../redux/features/books/booksApi';
 
 type EditBookProps = {
     openEditModal: boolean;

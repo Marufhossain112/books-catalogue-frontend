@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { api } from "./features/api/apiSlice";
 import userReducer from "./features/user/userSlice";
-import searchAndFilterReducer from './features/searchFilters/reducers';
+import searchAndFilterReducer from './features/searchFilters/searchFilterReducer';
 import reviewReducer from './features/Review/reviewSlice';
 // Persist configuration for the regular Redux store
 const reduxPersistConfig = {

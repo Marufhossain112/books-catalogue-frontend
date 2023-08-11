@@ -1,6 +1,6 @@
 
 import { Card, Spinner } from 'flowbite-react';
-import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/api/apiSlice';
+
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 import ReviewRating from '../components/ReviewRating';
@@ -11,6 +11,7 @@ import { MdDelete } from "react-icons/md";
 import EditBook from './EditBook';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../redux/hooks';
+import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/books/booksApi';
 export default function BooksDetails() {
     const navigate = useNavigate();
     const { pathname } = useLocation();

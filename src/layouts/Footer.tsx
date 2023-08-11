@@ -2,9 +2,10 @@
 
 import { Footer } from 'flowbite-react';
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter, BsDribbble } from 'react-icons/bs';
-import { useGetBooksQuery } from '../redux/features/api/apiSlice';
+import { useGetBooksQuery } from '../redux/features/books/booksApi';
 
 export default function Footers() {
+    // eslint-disable-next-line no-undefined
     const { isLoading } = useGetBooksQuery(undefined);
     return (
         <>

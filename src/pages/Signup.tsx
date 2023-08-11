@@ -1,11 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import { usePostCreateUserMutation } from "../redux/features/api/apiSlice";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useState } from "react";
 import { IUser } from "../interfaces/common";
+import { usePostCreateUserMutation } from "../redux/features/user/userApi";
 
 export default function SignUp() {
     const [isChecked, setIsChecked] = useState(false);

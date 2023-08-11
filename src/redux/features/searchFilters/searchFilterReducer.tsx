@@ -5,7 +5,7 @@ import {
   setFilterGenre,
   setFilterPublicationYear,
   setFilterGenrePublicationYear,
-} from "./action";
+} from "./searchFilterAction";
 interface SearchAndFilterState {
   searchTerm: string;
   filterGenre: string;
@@ -19,7 +19,7 @@ const initialState: SearchAndFilterState = {
   searchTerm: "",
   filterGenre: "",
   filterPublicationYear: "",
-  filterGenrePublicationYear:{},
+  filterGenrePublicationYear: {},
   isFilterGenre: false,
   isFilterPublication: false,
   isFilterGenrePublication: false,

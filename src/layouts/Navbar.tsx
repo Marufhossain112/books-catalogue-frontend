@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout } from '../redux/features/user/userSlice';
 import { FaFilter } from 'react-icons/fa';
 import "./../styles/styles.css";
-import { setFilterGenre, setFilterGenrePublicationYear, setFilterPublicationYear, setSearchTerm } from '../redux/features/searchFilters/action';
+import { setFilterGenre, setFilterGenrePublicationYear, setFilterPublicationYear, setSearchTerm } from '../redux/features/searchFilters/searchFilterAction';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function NavbarWithCTAButton() {
@@ -30,14 +30,10 @@ export default function NavbarWithCTAButton() {
 
     };
     const handleGenreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // event.preventDefault();
-        // const newGenreValue = event.target.value;
-        // setGenreValue(newGenreValue);
         const genreValue = event.target.value;
         setGenreValue(genreValue);
         dispatch(setFilterGenre(genreValue));
     };
-    // console.log("Genre value", genreValue);
 
     const handlePublicationYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const publicationYearValue = event.target.value;
@@ -52,7 +48,6 @@ export default function NavbarWithCTAButton() {
         e.preventDefault();
         setIsGenreClick(true);
         // dispatch(setFilterGenre(genreValue));
-
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handlePublicationYear = (e: any) => {
