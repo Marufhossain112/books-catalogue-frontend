@@ -9,6 +9,7 @@ import AllBooks from "../pages/AllBooks";
 import AddBook from "../pages/AddBook";
 import SignIn from "../pages/Signin";
 import { Toastify } from "../components/Toastify";
+import PrivateRoutes from "./PrivateRoutes";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/toast",
-    element: <Toastify></Toastify>
+    element: <PrivateRoutes> <Toastify></Toastify></PrivateRoutes>
   },
   {
     path: "*",

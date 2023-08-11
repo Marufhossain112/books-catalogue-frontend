@@ -2,11 +2,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Label, TextInput } from 'flowbite-react';
 import { usePostLoginUserMutation } from "../redux/features/api/apiSlice";
 import { ILoginUser } from "../interfaces/common";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../redux/features/user/userSlice";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+    const { isLoggedIn } = useAppSelector((state) => state.persistedReducer);
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     // eslint-disable-next-line no-undefined
     const [postLoginUser] = usePostLoginUserMutation(undefined);
@@ -29,6 +33,19 @@ export default function SignIn() {
             toast.error(error.data.message);
         });
     };
+    // scenarion after login
+    useEffect(() => {
+        if (isLoggedIn) {
+            const previousPrivateRoute = sessionStorage.getItem('previousPrivateRoute');
+            if (previousPrivateRoute) {
+                sessionStorage.removeItem('previousPrivateRoute');
+                navigate(previousPrivateRoute);
+            } else {
+                navigate('/');
+            }
+        }
+    }, [isLoggedIn, navigate]);
+
     return (
         <>
             <h3 className='text-center font-medium text-3xl mt-5'>Sign in</h3>

@@ -1,7 +1,7 @@
 
 import { Card, Spinner } from 'flowbite-react';
 import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/api/apiSlice';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 import ReviewRating from '../components/ReviewRating';
 import { useState } from 'react';
@@ -10,7 +10,11 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import EditBook from './EditBook';
 import { toast } from 'react-toastify';
+import { useAppSelector } from '../redux/hooks';
 export default function BooksDetails() {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const { isLoggedIn } = useAppSelector((state) => state.persistedReducer);
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     // const navigate = useNavigate();
@@ -21,7 +25,8 @@ export default function BooksDetails() {
     const [deleteSingleBook] = useDeleteSingleBookMutation();
     // handle edit button    
     const handleEditBook = () => {
-        setOpenEditModal(true);
+        setOpenModal(true);
+
     };
     // handle delete button
     const handleDeleteBook = async () => {
@@ -57,7 +62,12 @@ export default function BooksDetails() {
     const reviewsList = reviews.data;
     // console.log('I am grom BooksDetails', reviewsList);
     const handleAddReview = () => {
-        setOpenModal(true);
+        if (!isLoggedIn) {
+            sessionStorage.setItem('previousPrivateRoute', pathname);
+            navigate("/signin");
+        } else {
+            setOpenModal(true);
+        }
     };
     return (
         <>
