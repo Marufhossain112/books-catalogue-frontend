@@ -31,7 +31,7 @@ export default function LatestBooks() {
             />
         </div>;
     }
-    console.log("both", GenrePublicationYearResponse);
+    // console.log("both", GenrePublicationYearResponse);
     let books;
     if (isFilterGenrePublicationYear) {
         books = GenrePublicationYearResponse.data;
@@ -45,7 +45,7 @@ export default function LatestBooks() {
     }
     else if (isFilterGenre && isFilterPublicationYear) {
         books = GenrePublicationYearResponse.data;
-        console.log("duitai true", books);
+        // console.log("duitai true", books);
     }
     else {
         books = searchResponse.data;
