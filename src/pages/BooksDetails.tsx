@@ -1,6 +1,6 @@
 
 import { Card, Spinner } from 'flowbite-react';
-import { useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/api/apiSlice';
+import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/api/apiSlice';
 import { useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 import ReviewRating from '../components/ReviewRating';
@@ -9,6 +9,7 @@ import AddReview from '../components/AddReview';
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import EditBook from './EditBook';
+import { toast } from 'react-toastify';
 export default function BooksDetails() {
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
@@ -17,9 +18,24 @@ export default function BooksDetails() {
     const { id } = useParams();
     const { data, isLoading } = useGetSingleBookQuery(id);
     const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id, { refetchOnMountOrArgChange: true });
-    // console.log("My reviews", reviews);
+    const [deleteSingleBook] = useDeleteSingleBookMutation();
+    // handle edit button    
     const handleEditBook = () => {
         setOpenEditModal(true);
+    };
+    // handle delete button
+    const handleDeleteBook = async () => {
+        await deleteSingleBook(id).unwrap().then((response) => {
+            // console.log(response);
+            if (response.statusCode === 200) {
+                toast.success(response.message);
+            }
+        }).catch((error) => {
+            if (error) {
+                toast.error(error?.data?.message);
+            }
+        });
+
     };
     // handle loading
     if (isLoading || reviewLoading) {
@@ -34,8 +50,6 @@ export default function BooksDetails() {
     const reviewsList = reviews.data;
     // console.log('I am grom BooksDetails', reviewsList);
     const handleAddReview = () => {
-        // OpenModal();
-        // navigate('/add-review');
         setOpenModal(true);
     };
     return (
@@ -65,7 +79,7 @@ export default function BooksDetails() {
             </Card>
             <div className='text-center font-medium text-md  mb-1'>
                 <button onClick={handleEditBook} className='hover:underline' style={{ display: 'inline-flex', alignItems: 'center', gap: '0.1rem' }}><span>Edit book</span> <span className='mr-48'> <AiTwotoneEdit></AiTwotoneEdit></span> </button>
-                <button className='hover:underline' style={{ display: 'inline-flex', alignItems: 'center', gap: '0.1rem' }}><span>Delete book</span> <span> <MdDelete></MdDelete></span> </button>
+                <button onClick={handleDeleteBook} className='hover:underline' style={{ display: 'inline-flex', alignItems: 'center', gap: '0.1rem' }}><span>Delete book</span> <span> <MdDelete></MdDelete></span> </button>
             </div>
             {!reviewsList.length ? <> <h1 className='text-center text-lg   mb-4 '>No reviews yet,click add review button to add a review </h1>  <div className='text-center'>
                 <button onClick={handleAddReview} className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
