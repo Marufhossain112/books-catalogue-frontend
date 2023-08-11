@@ -37,15 +37,22 @@ export default function BooksDetails() {
         });
 
     };
-    // handle loading
     if (isLoading || reviewLoading) {
-        return <div className='text-center'>
-            <Spinner
-                aria-label="Extra large spinner example"
-                size="xl"
-            />
-        </div>;
+        return (
+            <div className='text-center'>
+                <Spinner aria-label="Extra large spinner example" size="xl" />
+            </div>
+        );
     }
+
+    if (data.data === null) {
+        return (
+            <div className='text-center h-[50vh] grid content-center'>
+                <p className='font-medium text-2xl'>Sorry, no book data available.</p>
+            </div>
+        );
+    }
+
     const { imgUrl, title, author, genre, publicationYear } = data.data;
     const reviewsList = reviews.data;
     // console.log('I am grom BooksDetails', reviewsList);

@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://books-zone-marufhossain112.vercel.app/api/v1/' }),
-    tagTypes: ['reviews', 'books'],
+    tagTypes: ['reviews', 'books', 'removeBook'],
     endpoints: (builder) => ({
         getBooks: builder.query({
             query: () => `books/all-books`,
@@ -15,7 +15,7 @@ export const api = createApi({
         }),
         getSingleBook: builder.query({
             query: (id) => `books/${id}`,
-            providesTags: ['books']
+            providesTags: ['books', 'removeBook']
         }),
         getSingleBookReview: builder.query({
             query: (id) => `/review-api/reviews/${id}`,
@@ -87,6 +87,7 @@ export const api = createApi({
                 url: `books/${id}`,
                 method: 'DELETE',
             }),
+            invalidatesTags: ['removeBook']
         }),
     }),
 });
