@@ -13,11 +13,11 @@ export default function AllBooks() {
     const FilterGenreValue = useAppSelector((state) => state.searchAndFilter.filterGenre);
     const FilterPublicationValue = useAppSelector((state) => state.searchAndFilter.filterPublicationYear);
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
-    // console.log("TATATATATATAT", FilterGenrePublicationValue);
-    // console.log(FilterGenreValue);
+
     const navigate = useNavigate();
+    // eslint-disable-next-line no-undefined
     const { data, isLoading: Loading } = useGetBooksQuery(undefined);
-    const { data: searchResponse, isLoading } = useGetSearchedBooksFromAllQuery(searchTerm);
+    const { data: searchResponse, isLoading } = useGetSearchedBooksFromAllQuery(searchTerm, { refetchOnMountOrArgChange: true });
     const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreFromAllQuery(FilterGenreValue);
     const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearFromAllQuery(FilterPublicationValue);
     const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearFromAllQuery(FilterGenrePublicationValue);
@@ -31,7 +31,7 @@ export default function AllBooks() {
         </div>;
 
     }
-    console.log("both", GenrePublicationYearResponse);
+    // console.log("both", GenrePublicationYearResponse);
     let books;
     if (isFilterGenrePublicationYear) {
         books = GenrePublicationYearResponse.data;
@@ -45,7 +45,7 @@ export default function AllBooks() {
     }
     else if (isFilterGenre && isFilterPublicationYear) {
         books = GenrePublicationYearResponse.data;
-        console.log("duitai true", books);
+        // console.log("duitai true", books);
     }
     else {
         books = searchResponse.data;

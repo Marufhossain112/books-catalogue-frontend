@@ -15,11 +15,12 @@ export default function LatestBooks() {
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
     // console.log("TATATATATATAT", FilterGenrePublicationValue);
     // console.log(FilterGenreValue);
+    // eslint-disable-next-line no-undefined
     const { data, isLoading: Loading } = useGetLatestBooksQuery(undefined);
-    const { data: searchResponse, isLoading } = useGetSearchedBooksFromLatestQuery(searchTerm);
-    const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreQuery(FilterGenreValue);
-    const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearQuery(FilterPublicationValue);
-    const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearQuery(FilterGenrePublicationValue);
+    const { data: searchResponse, isLoading } = useGetSearchedBooksFromLatestQuery(searchTerm, { refetchOnMountOrArgChange: true });
+    const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreQuery(FilterGenreValue, { refetchOnMountOrArgChange: true });
+    const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearQuery(FilterPublicationValue, { refetchOnMountOrArgChange: true });
+    const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearQuery(FilterGenrePublicationValue, { refetchOnMountOrArgChange: true });
     const navigate = useNavigate();
     if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {
         // return <p>I am Loading</p>;

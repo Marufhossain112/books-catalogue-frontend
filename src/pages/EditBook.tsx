@@ -3,49 +3,31 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { IBook } from '../interfaces/common';
-import { usePostCreateReviewMutation } from '../redux/features/api/apiSlice';
+import { usePostEditBookMutation } from '../redux/features/api/apiSlice';
 import { toast } from 'react-toastify';
-import { addReview } from '../redux/features/Review/reviewSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-interface EditBookProps {
+
+type EditBookProps = {
     openEditModal: boolean;
     setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>;
     data: IBook;
-}
+};
 export default function EditBook({ openEditModal, setOpenEditModal, data }: EditBookProps) {
-    console.log('I am from the edit book', data);
-    const { id: book } = useParams();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IBook>();
+    const { id } = useParams();
+    const { register, handleSubmit, formState: { errors } } = useForm<IBook>();
     const { imgUrl, title, author, genre, publicationYear } = data;
 
     // use mutation hook for creating review
-    const [postCreateReview] = usePostCreateReviewMutation();
-    // toast messages
-    const reviewCreateSuccessNotify = () => {
-        toast.success("Review created successfully.");
-    };
-    const reviewCreateErrorNotify = (error: string) => {
-        toast.error(error);
-    };
-    const reviews = useAppSelector((state) => state.storedReviews.reviews);
-    console.log('from store', reviews);
-    const dispatch = useAppDispatch();
-
-    const reviewSubmit: SubmitHandler<IBook> = async (data: IBook) => {
-        // const rating = (data.rating);
-        dispatch(addReview({ ...data, book }));
-        await postCreateReview({ ...data, book }).unwrap().then((response) => {
-            console.log(response);
+    const [postEditBook] = usePostEditBookMutation();
+    const bookSubmit: SubmitHandler<IBook> = async (data: IBook) => {
+        await postEditBook({ data, id }).unwrap().then((response) => {
             if (response.statusCode === 200) {
-                reviewCreateSuccessNotify();
+                toast.success(response.message);
             }
         }).catch((error) => {
-            console.log('errors', error);
             if (error) {
-                reviewCreateErrorNotify(error?.data?.message);
+                toast.error(error?.data?.message);
             }
         });
-        reset();
     };
 
     return (
@@ -53,28 +35,28 @@ export default function EditBook({ openEditModal, setOpenEditModal, data }: Edit
             <Modal show={openEditModal} size="md" popup onClose={() => setOpenEditModal(false)}>
                 <Modal.Header />
                 <Modal.Body>
-                    <form onSubmit={handleSubmit(reviewSubmit)} >
+                    <form onSubmit={handleSubmit(bookSubmit)} >
                         <div className="space-y-6">
                             <h3 className="text-xl font-medium text-gray-900 dark:text-white">Edit your book</h3>
                             <div>
                                 <div className="mb-2 block">
                                     <Label htmlFor="title" value="Book title" />
                                 </div>
-                                <TextInput id="title" type='text' value={title} required {...register("title")} />
+                                <TextInput id="title" type='text' defaultValue={title}  {...register("title")} />
                                 {errors.title && <p>{errors.title.message?.toString()}</p>}
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label htmlFor="author" value="Book author" />
                                 </div>
-                                <TextInput id="author" type="text" value={author} required  {...register("author")} />
+                                <TextInput id="author" type="text" defaultValue={author}   {...register("author")} />
                                 {errors.author && <p>{errors.author.message?.toString()}</p>}
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label htmlFor="genre" value="Book genre" />
                                 </div>
-                                <TextInput id="genre" type="text" value={genre} required {...register("genre")} />
+                                <TextInput id="genre" type="text" defaultValue={genre}  {...register("genre")} />
                                 {/* {errors.rating && <p>{errors.rating.message?.toString()}</p>} */}
                                 {errors.genre && <p>{errors.genre.message}</p>}
                             </div>
@@ -82,14 +64,14 @@ export default function EditBook({ openEditModal, setOpenEditModal, data }: Edit
                                 <div className="mb-2 block">
                                     <Label htmlFor="publicationYear" value="Reviewer name" />
                                 </div>
-                                <TextInput id="publicationYear" value={publicationYear} type="text" required {...register("publicationYear")} />
+                                <TextInput id="publicationYear" defaultValue={publicationYear} type="text"  {...register("publicationYear")} />
                                 {errors.publicationYear && <p>{errors.publicationYear.message?.toString()}</p>}
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label htmlFor="imgUrl" value="Book imgUrl" />
                                 </div>
-                                <TextInput id="imgUrl" value={imgUrl} type="text" required {...register("imgUrl")} />
+                                <TextInput id="imgUrl" defaultValue={imgUrl} type="text"  {...register("imgUrl")} />
                                 {errors.imgUrl && <p>{errors.imgUrl.message?.toString()}</p>}
                             </div>
                             <div className="w-full">

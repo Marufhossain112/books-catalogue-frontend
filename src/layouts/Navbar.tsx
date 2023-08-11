@@ -63,14 +63,14 @@ export default function NavbarWithCTAButton() {
         e.preventDefault();
         if (genre == "") {
             dispatch(setFilterPublicationYear(publicationYear));
-            console.log(1);
+            // console.log(1);
         }
         else if (publicationYear == "") {
             dispatch(setFilterGenre(genre));
-            console.log(2);
+            // console.log(2);
         } else {
             dispatch(setFilterGenrePublicationYear({ genre, publicationYear }));
-            console.log(3);
+            // console.log(3);
         }
     };
     // useFilterBooksByGenrePublicationYearQuery()

@@ -29,7 +29,7 @@ export default function SignUp() {
                 singupSuccessNotify();
             }
         }).catch((error) => {
-            console.log('errors', error);
+            // console.log('errors', error);
             if (error) {
                 singupFailNotify(error?.data?.message);
             }

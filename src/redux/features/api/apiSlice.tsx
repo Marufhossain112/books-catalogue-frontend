@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://books-zone-marufhossain112.vercel.app/api/v1/' }),
-    tagTypes: ['reviews'],
+    tagTypes: ['reviews', 'books'],
     endpoints: (builder) => ({
         getBooks: builder.query({
             query: () => `books/all-books`,
@@ -15,6 +15,8 @@ export const api = createApi({
         }),
         getSingleBook: builder.query({
             query: (id) => `books/${id}`,
+            providesTags: ['books']
+
         }),
         getSingleBookReview: builder.query({
             query: (id) => `/review-api/reviews/${id}`,
@@ -73,11 +75,19 @@ export const api = createApi({
             }),
             invalidatesTags: ['reviews']
         }),
+        postEditBook: builder.mutation({
+            query: ({ data, id }) => ({
+                url: `books/${id}`,
+                method: 'PATCH',
+                body: data
+            }),
+            invalidatesTags: ['books']
+        }),
     }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery, useGetSearchedBooksFromAllQuery, useFilterBooksByGenreFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, usePostCreateBookMutation, useGetSingleBookReviewQuery, usePostCreateReviewMutation } = api;
+export const { useGetBooksQuery, useGetSingleBookQuery, usePostCreateUserMutation, usePostLoginUserMutation, useGetLatestBooksQuery, useGetSearchedBooksFromLatestQuery, useFilterBooksByGenreQuery, useFilterBooksByPublicationYearQuery, useFilterBooksByGenrePublicationYearQuery, useGetSearchedBooksFromAllQuery, useFilterBooksByGenreFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, usePostCreateBookMutation, useGetSingleBookReviewQuery, usePostCreateReviewMutation, usePostEditBookMutation } = api;
 
 

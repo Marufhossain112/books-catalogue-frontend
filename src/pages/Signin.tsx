@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 export default function SignIn() {
     const dispatch = useAppDispatch();
+    // eslint-disable-next-line no-undefined
     const [postLoginUser] = usePostLoginUserMutation(undefined);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ILoginUser>();
     // toast message
@@ -15,7 +16,7 @@ export default function SignIn() {
     // submit the form
     const onSubmit: SubmitHandler<ILoginUser> = async (data) => {
         await postLoginUser(data).unwrap().then((response) => {
-            console.log(response);
+            // console.log(response);
             if (response.statusCode === 200) {
                 const user = data.email;
                 const token = response.data.accessToken;
@@ -24,7 +25,7 @@ export default function SignIn() {
                 reset();
             }
         }).catch((error) => {
-            console.log('errors', error);
+            // console.log('errors', error);
             toast.error(error.data.message);
         });
     };

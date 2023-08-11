@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import AllBooks from "../pages/AllBooks";
 import AddBook from "../pages/AddBook";
 import SignIn from "../pages/Signin";
+import { Toastify } from "../components/Toastify";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
   {
     path: "/books-details",
     element: <BooksDetails></BooksDetails>
+  },
+  {
+    path: "/toast",
+    element: <Toastify></Toastify>
   },
   {
     path: "*",

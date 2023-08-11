@@ -18,14 +18,14 @@ export default function AddBook() {
 
     // submit the form
     const onSubmit: SubmitHandler<IBook> = async (data) => {
-        console.log('receive data', data);
+        // console.log('receive data', data);
         await postCreateBook(data).unwrap().then((response) => {
             // console.log(response);
             if (response.statusCode === 200) {
                 bookCreateSuccessNotify();
             }
         }).catch((error) => {
-            console.log('errors', error);
+            // console.log('errors', error);
             if (error) {
                 bookCreateErrorNotify(error?.data?.message);
             }

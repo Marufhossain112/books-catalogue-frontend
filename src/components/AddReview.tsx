@@ -7,12 +7,12 @@ import { IReview } from '../interfaces/common';
 import { usePostCreateReviewMutation } from '../redux/features/api/apiSlice';
 import { toast } from 'react-toastify';
 import { addReview } from '../redux/features/Review/reviewSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch } from '../redux/hooks';
 // import { useParams } from 'react-router-dom';
-interface AddReviewProps {
+type AddReviewProps = {
     openModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
     const { id: book } = useParams();
@@ -26,20 +26,18 @@ export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
     const reviewCreateErrorNotify = (error: string) => {
         toast.error(error);
     };
-    const reviews = useAppSelector((state) => state.storedReviews.reviews);
-    console.log('from store', reviews);
     const dispatch = useAppDispatch();
 
     const reviewSubmit: SubmitHandler<IReview> = async (data: IReview) => {
         // const rating = (data.rating);
         dispatch(addReview({ ...data, book }));
         await postCreateReview({ ...data, book }).unwrap().then((response) => {
-            console.log(response);
+            // console.log(response);
             if (response.statusCode === 200) {
                 reviewCreateSuccessNotify();
             }
         }).catch((error) => {
-            console.log('errors', error);
+            // console.log('errors', error);
             if (error) {
                 reviewCreateErrorNotify(error?.data?.message);
             }
