@@ -6,7 +6,7 @@
 
 - Backend repository - https://github.com/Marufhossain112/books-catalogue-backend
 
-# Book Zone
+# Books Zone
 
 A books catalogue website where different kinds of books will be exhibited.
 
