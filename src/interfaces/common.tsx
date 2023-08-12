@@ -1,4 +1,4 @@
-export interface IUser {
+export type IUser = {
     name: string;
     email: string;
     password: string;
@@ -6,11 +6,11 @@ export interface IUser {
     contactNo: string;
     bloodGroup: string;
     presentAddress: string;
-}
-export interface ILoginUser {
+};
+export type ILoginUser = {
     email: string;
     password: string;
-}
+};
 export type IBook = {
     _id: string;
     id: string;

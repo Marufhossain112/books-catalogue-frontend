@@ -17,11 +17,16 @@ export default function AllBooks() {
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
 
     const navigate = useNavigate();
+    // get all books data
     // eslint-disable-next-line no-undefined
     const { data, isLoading: Loading } = useGetBooksQuery(undefined);
+    // get searched books from all books data
     const { data: searchResponse, isLoading } = useGetSearchedBooksFromAllQuery(searchTerm, { refetchOnMountOrArgChange: true });
+    // get filtered books from all books data based on genre
     const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreFromAllQuery(FilterGenreValue);
+    // get filtered books from all books data based on publicationYear
     const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearFromAllQuery(FilterPublicationValue);
+    // get filtered books from all books data based on genre & publicationYear
     const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearFromAllQuery(FilterGenrePublicationValue);
     if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {
         // return <p>I am Loading</p>;

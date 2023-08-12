@@ -21,8 +21,11 @@ export default function BooksDetails() {
     // const navigate = useNavigate();
 
     const { id } = useParams();
+    // get single books data
     const { data, isLoading } = useGetSingleBookQuery(id);
+    // get single books review
     const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id, { refetchOnMountOrArgChange: true });
+    // delete single book
     const [deleteSingleBook] = useDeleteSingleBookMutation();
     // handle edit button    
     const handleEditBook = () => {

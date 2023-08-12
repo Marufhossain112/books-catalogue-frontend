@@ -6,7 +6,7 @@ import {
   setFilterPublicationYear,
   setFilterGenrePublicationYear,
 } from "./searchFilterAction";
-interface SearchAndFilterState {
+type SearchAndFilterState = {
   searchTerm: string;
   filterGenre: string;
   filterPublicationYear: string;
@@ -14,7 +14,7 @@ interface SearchAndFilterState {
   isFilterGenre: boolean;
   isFilterPublication: boolean;
   isFilterGenrePublication: boolean;
-}
+};
 const initialState: SearchAndFilterState = {
   searchTerm: "",
   filterGenre: "",

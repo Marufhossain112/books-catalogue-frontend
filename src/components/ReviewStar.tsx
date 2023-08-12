@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Rating } from 'flowbite-react'; // Import the appropriate icon from Flowbite
 
-interface ReviewRatingProps {
+type ReviewRatingProps = {
     userRating: number;
-}
+};
 
 export const ReviewRating: React.FC<ReviewRatingProps> = ({ userRating }) => {
     const totalStars = 5;

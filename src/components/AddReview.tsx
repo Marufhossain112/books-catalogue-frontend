@@ -8,13 +8,14 @@ import { toast } from 'react-toastify';
 import { addReview } from '../redux/features/Review/reviewSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { usePostCreateReviewMutation } from '../redux/features/Review/reviewApi';
-// import { useParams } from 'react-router-dom';
+// type for props
 type AddReviewProps = {
     openModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
+    // get current book id
     const { id: book } = useParams();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IReview>();
     // use mutation hook for creating review
@@ -28,6 +29,7 @@ export default function AddReview({ openModal, setOpenModal }: AddReviewProps) {
     };
     const dispatch = useAppDispatch();
 
+    // handle review submit
     const reviewSubmit: SubmitHandler<IReview> = async (data: IReview) => {
         // const rating = (data.rating);
         dispatch(addReview({ ...data, book }));

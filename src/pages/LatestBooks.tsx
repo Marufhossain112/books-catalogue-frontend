@@ -17,11 +17,16 @@ export default function LatestBooks() {
     const FilterGenrePublicationValue = useAppSelector((state) => state.searchAndFilter.filterGenrePublicationYear);
     // console.log("TATATATATATAT", FilterGenrePublicationValue);
     // console.log(FilterGenreValue);
+    // get Latest books data
     // eslint-disable-next-line no-undefined
     const { data, isLoading: Loading } = useGetLatestBooksQuery(undefined);
+    // get filtered books from latest books data based on searchTerm
     const { data: searchResponse, isLoading } = useGetSearchedBooksFromLatestQuery(searchTerm, { refetchOnMountOrArgChange: true });
+    // get filtered books from latest books data based on genre
     const { data: filterGenreResponse, isLoading: LoadingGenre } = useFilterBooksByGenreQuery(FilterGenreValue, { refetchOnMountOrArgChange: true });
+    // get filtered books from latest books data based on publicationYear
     const { data: filterPublicationYearResponse, isLoading: LoadingPublicationYear } = useFilterBooksByPublicationYearQuery(FilterPublicationValue, { refetchOnMountOrArgChange: true });
+    // get filtered books from latest books data based on genre & publicationYear
     const { data: GenrePublicationYearResponse, isLoading: LoadingGenreYear } = useFilterBooksByGenrePublicationYearQuery(FilterGenrePublicationValue, { refetchOnMountOrArgChange: true });
     const navigate = useNavigate();
     if (isLoading || LoadingGenre || LoadingPublicationYear || Loading || LoadingGenreYear) {

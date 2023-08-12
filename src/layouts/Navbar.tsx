@@ -21,20 +21,23 @@ export default function NavbarWithCTAButton() {
     const handleLogOut = () => {
         dispatch(logout());
     };
+    // handle add book button
     const handleAddBook = () => {
         navigate('/new-book');
     };
+    // handle searchChange
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
         dispatch(setSearchTerm(searchTerm));
 
     };
+    // handle genre change
     const handleGenreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const genreValue = event.target.value;
         setGenreValue(genreValue);
         dispatch(setFilterGenre(genreValue));
     };
-
+    // handle publication year change
     const handlePublicationYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const publicationYearValue = event.target.value;
         setPublicationYearValue(publicationYearValue);

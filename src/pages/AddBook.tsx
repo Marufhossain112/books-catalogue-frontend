@@ -33,7 +33,6 @@ export default function AddBook() {
         reset();
     };
 
-
     return (
         <>
             <h3 className='text-center font-medium text-3xl '>Add New Book</h3>

@@ -1,5 +1,4 @@
 'use client';
-
 import { Footer } from 'flowbite-react';
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter, BsDribbble } from 'react-icons/bs';
 import { useGetBooksQuery } from '../redux/features/books/booksApi';
