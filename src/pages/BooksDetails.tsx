@@ -29,13 +29,12 @@ export default function BooksDetails() {
     // delete single book
     const [deleteSingleBook] = useDeleteSingleBookMutation();
 
-    const userToken = localStorage.getItem('userToken');
 
     // check isPublisher
     const isPublisher =
         // Modify this line to use optional chaining
         data?.data?.publisherToken === user ? true : false;
-    console.log('isPublisher', isPublisher);
+    // console.log('isPublisher', isPublisher);
 
     // handle edit button    
     const handleEditBook = () => {
