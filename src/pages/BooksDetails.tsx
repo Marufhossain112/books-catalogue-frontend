@@ -15,7 +15,7 @@ import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookRev
 export default function BooksDetails() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { isLoggedIn } = useAppSelector((state) => state.persistedReducer);
+    const { isLoggedIn, user } = useAppSelector((state) => state.persistedReducer);
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     // const navigate = useNavigate();
@@ -23,10 +23,20 @@ export default function BooksDetails() {
     const { id } = useParams();
     // get single books data
     const { data, isLoading } = useGetSingleBookQuery(id);
+    // console.log("dkfjakdjs", data?.data);
     // get single books review
     const { data: reviews, isLoading: reviewLoading } = useGetSingleBookReviewQuery(id, { refetchOnMountOrArgChange: true });
     // delete single book
     const [deleteSingleBook] = useDeleteSingleBookMutation();
+
+    const userToken = localStorage.getItem('userToken');
+
+    // check isPublisher
+    const isPublisher =
+        // Modify this line to use optional chaining
+        data?.data?.publisherToken === user ? true : false;
+    console.log('isPublisher', isPublisher);
+
     // handle edit button    
     const handleEditBook = () => {
         setOpenEditModal(true);
@@ -97,10 +107,11 @@ export default function BooksDetails() {
                     <p><span className='font-bold'>Released : </span>{publicationYear}</p>
                 </div>
             </Card>
-            <div className='text-center font-medium text-md  mb-1'>
+            {isPublisher && <div className='text-center font-medium text-md  mb-1'>
                 <button onClick={handleEditBook} className='hover:underline' style={{ display: 'inline-flex', alignItems: 'center', gap: '0.1rem' }}><span>Edit book</span> <span className='mr-48'> <AiTwotoneEdit></AiTwotoneEdit></span> </button>
                 <button onClick={handleDeleteBook} className='hover:underline' style={{ display: 'inline-flex', alignItems: 'center', gap: '0.1rem' }}><span>Delete book</span> <span> <MdDelete></MdDelete></span> </button>
-            </div>
+            </div>}
+
             {!reviewsList.length ? <> <h1 className='text-center text-lg   mb-4 '>No reviews yet,click add review button to add a review </h1>  <div className='text-center'>
                 <button onClick={handleAddReview} className='text-center text-2xl  mb-4 outline outline-stone-700 hover:bg-gray-100  p-1 rounded-md'>Add Your Review</button>
             </div> </> : <>

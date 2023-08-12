@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
 
       {
         path: '/new-book',
-        element: <AddBook></AddBook>
+        element: <PrivateRoutes><AddBook></AddBook></PrivateRoutes>
       },
     ]
   },

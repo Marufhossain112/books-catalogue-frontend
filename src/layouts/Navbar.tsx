@@ -6,7 +6,8 @@ import { FaFilter } from 'react-icons/fa';
 import "./../styles/styles.css";
 import { setFilterGenre, setFilterGenrePublicationYear, setFilterPublicationYear, setSearchTerm } from '../redux/features/searchFilters/searchFilterAction';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 export default function NavbarWithCTAButton() {
     const navigate = useNavigate();
     const [isFilterClick, setIsFilterClick] = useState(false);
@@ -19,7 +20,9 @@ export default function NavbarWithCTAButton() {
     // const isFilterGenrePublication = useAppSelector((state) => state.searchAndFilter.isFilterGenrePublication);
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
+        localStorage.removeItem("userToken");
         dispatch(logout());
+        toast.success('Log out successfully');
     };
     // handle add book button
     const handleAddBook = () => {
@@ -127,31 +130,40 @@ export default function NavbarWithCTAButton() {
                 </form>
             </div >
             <Navbar.Collapse>
-                <Navbar.Link
-                    active
-                    href="/"
+                <NavLink
+                    to="/" className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
                 >
                     <p>
                         Home
                     </p>
-                </Navbar.Link>
-                <Navbar.Link href="/all-books">
+                </NavLink>
+                <NavLink to="/all-books" className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                }>
                     All books
-                </Navbar.Link>
-
+                </NavLink>
                 {<>
                     {isLoggedIn ? (
-                        <> <Navbar.Link onClick={handleAddBook}>Add Book</Navbar.Link>
-                            <Navbar.Link onClick={handleLogOut}>Sign Out</Navbar.Link></>
+                        <> <NavLink to={'/new-book'} onClick={handleAddBook} className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }>Add Book</NavLink>
+                            <button onClick={handleLogOut}>Sign Out</button></>
                     ) : (
-                        <Navbar.Link href="/signin">Sign in</Navbar.Link>
+                        <NavLink to="/signin">Sign in</NavLink>
                     )}
                 </>}
 
-                <Navbar.Link href="/signup">
+                <NavLink to="/signup" className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                }>
                     Sign Up
-                </Navbar.Link>
+                </NavLink>
             </Navbar.Collapse>
+
+
+
         </Navbar >
     );
 }

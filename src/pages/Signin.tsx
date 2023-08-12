@@ -24,13 +24,14 @@ export default function SignIn() {
             if (response.statusCode === 200) {
                 const user = data.email;
                 const token = response.data.accessToken;
+                localStorage.setItem('userToken', token);
                 dispatch(login({ user, token }));
                 toast.success(response.message);
                 reset();
             }
         }).catch((error) => {
             // console.log('errors', error);
-            toast.error(error.data.message);
+            toast.error(error?.data?.message);
         });
     };
     // scenarion after login

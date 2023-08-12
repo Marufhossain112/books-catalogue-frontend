@@ -4,8 +4,10 @@ import { Button, Label, TextInput } from 'flowbite-react';
 import { IBook } from "../interfaces/common";
 import { ToastContainer, toast } from "react-toastify";
 import { usePostCreateBookMutation } from "../redux/features/books/booksApi";
+import { useAppSelector } from "../redux/hooks";
 
 export default function AddBook() {
+    const { user: publisherToken } = useAppSelector((state) => state.persistedReducer);
     const [postCreateBook] = usePostCreateBookMutation();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBook>();
     // toast messages
@@ -18,8 +20,8 @@ export default function AddBook() {
 
     // submit the form
     const onSubmit: SubmitHandler<IBook> = async (data) => {
-        // console.log('receive data', data);
-        await postCreateBook(data).unwrap().then((response) => {
+        // console.log('receive data', ...data,publisher);
+        await postCreateBook({ ...data, publisherToken }).unwrap().then((response) => {
             // console.log(response);
             if (response.statusCode === 200) {
                 bookCreateSuccessNotify();
@@ -32,6 +34,7 @@ export default function AddBook() {
         });
         reset();
     };
+
 
     return (
         <>
