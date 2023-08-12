@@ -1,27 +1,20 @@
-# React + TypeScript + Vite
+## 🔗 Links
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Live site link - https://books-zone-frontend.vercel.app/
 
-Currently, two official plugins are available:
+- Frontend repository - https://github.com/Marufhossain112/books-catalogue-frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Backend repository - https://github.com/Marufhossain112/books-catalogue-backend
 
-## Expanding the ESLint configuration
+# Book Zone
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+A books catalogue website where different kinds of books will be exhibited.
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- User can signUp and signIn which implemented through custom authentication
+- On all books tab user can see all books where user can do search and filter as per there need
+- From all books if user click any specific book it will go to book details page, where user can edit or delete the book.
+- A authenticated user also can give a review on any book.
+- All reviews will be shown on book details page.
+- If the user is authenticated , he can add a new book as well.
