@@ -20,7 +20,7 @@ export default function BooksDetails() {
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [deletePopup, setDeletePopup] = useState(false);
-    const [yesPopup, setYesPopup] = useState(false);
+    const [setYesPopup] = useState(false);
     // console.log('yesPopup', yesPopup);
     // const navigate = useNavigate();
 

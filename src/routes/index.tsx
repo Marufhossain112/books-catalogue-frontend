@@ -32,11 +32,7 @@ export const router = createBrowserRouter([
       {
         path: '/new-book',
         element: <PrivateRoutes><AddBook></AddBook></PrivateRoutes>
-      },
-      {
-        path: '/popup',
-        element: <PopUpModal></PopUpModal>
-      },
+      }
     ]
   },
   {
