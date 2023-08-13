@@ -10,7 +10,6 @@ import AddBook from "../pages/AddBook";
 import SignIn from "../pages/Signin";
 import { Toastify } from "../components/Toastify";
 import PrivateRoutes from "./PrivateRoutes";
-import PopUpModal from "../components/DeletePopup";
 export const router = createBrowserRouter([
   {
     path: "/",

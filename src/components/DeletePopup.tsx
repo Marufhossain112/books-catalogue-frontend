@@ -5,8 +5,6 @@ import { HiOutlineExclamationCircle } from 'react-icons/hi';
 type DeleteReviewProps = {
     deletePopup: boolean;
     setDeletePopup: React.Dispatch<React.SetStateAction<boolean>>;
-    setYesPopup: React.Dispatch<React.SetStateAction<boolean>>;
-    // handleDeletePopup;
     handleDeletePopup: () => void;
 };
 export default function DeletePopUp({ deletePopup, setDeletePopup, handleDeletePopup }: DeleteReviewProps) {

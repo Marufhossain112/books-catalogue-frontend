@@ -1,6 +1,5 @@
 
 import { Card, Spinner } from 'flowbite-react';
-
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IReview } from '../interfaces/common';
 import ReviewRating from '../components/ReviewRating';
@@ -20,9 +19,6 @@ export default function BooksDetails() {
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [deletePopup, setDeletePopup] = useState(false);
-    const [setYesPopup] = useState(false);
-    // console.log('yesPopup', yesPopup);
-    // const navigate = useNavigate();
 
     const { id } = useParams();
     // get single books data
@@ -176,7 +172,7 @@ export default function BooksDetails() {
             }
             <AddReview openModal={openModal} setOpenModal={setOpenModal} />
             <EditBook data={data.data} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal}></EditBook>
-            <DeletePopUp setYesPopup={setYesPopup} deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeletePopup={handleDeletePopup}></DeletePopUp>
+            <DeletePopUp deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeletePopup={handleDeletePopup}></DeletePopUp>
         </>
     );
 }
