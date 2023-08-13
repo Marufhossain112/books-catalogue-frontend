@@ -10,6 +10,7 @@ import AddBook from "../pages/AddBook";
 import SignIn from "../pages/Signin";
 import { Toastify } from "../components/Toastify";
 import PrivateRoutes from "./PrivateRoutes";
+import PopUpModal from "../components/DeletePopup";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -28,10 +29,13 @@ export const router = createBrowserRouter([
         path: '/books/:id',
         element: <BooksDetails></BooksDetails>
       },
-
       {
         path: '/new-book',
         element: <PrivateRoutes><AddBook></AddBook></PrivateRoutes>
+      },
+      {
+        path: '/popup',
+        element: <PopUpModal></PopUpModal>
       },
     ]
   },

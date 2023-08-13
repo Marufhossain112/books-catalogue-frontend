@@ -1,4 +1,4 @@
-'use client';
+
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';

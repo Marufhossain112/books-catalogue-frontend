@@ -12,12 +12,16 @@ import EditBook from './EditBook';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../redux/hooks';
 import { useDeleteSingleBookMutation, useGetSingleBookQuery, useGetSingleBookReviewQuery } from '../redux/features/books/booksApi';
+import DeletePopUp from '../components/DeletePopup';
 export default function BooksDetails() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { isLoggedIn, user } = useAppSelector((state) => state.persistedReducer);
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const [deletePopup, setDeletePopup] = useState(false);
+    const [yesPopup, setYesPopup] = useState(false);
+    // console.log('yesPopup', yesPopup);
     // const navigate = useNavigate();
 
     const { id } = useParams();
@@ -42,17 +46,35 @@ export default function BooksDetails() {
     };
     // handle delete button
     const handleDeleteBook = async () => {
+        setDeletePopup(true);
+        // if (yesPopup) {
+        // await deleteSingleBook(id).unwrap().then((response) => {
+        //     // console.log(response);
+        //     if (response.statusCode === 200) {
+        //         toast.success(response.message);
+        //     }
+        // }).catch((error) => {
+        //     if (error) {
+        //         toast.error(error?.data?.message);
+        //     }
+        // });
+        // }
+
+
+    };
+    // handle delete popup
+    const handleDeletePopup = async () => {
         await deleteSingleBook(id).unwrap().then((response) => {
             // console.log(response);
             if (response.statusCode === 200) {
                 toast.success(response.message);
+                setDeletePopup(false);
             }
         }).catch((error) => {
             if (error) {
                 toast.error(error?.data?.message);
             }
         });
-
     };
     if (isLoading || reviewLoading) {
         return (
@@ -154,6 +176,7 @@ export default function BooksDetails() {
             }
             <AddReview openModal={openModal} setOpenModal={setOpenModal} />
             <EditBook data={data.data} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal}></EditBook>
+            <DeletePopUp setYesPopup={setYesPopup} deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeletePopup={handleDeletePopup}></DeletePopUp>
         </>
     );
 }

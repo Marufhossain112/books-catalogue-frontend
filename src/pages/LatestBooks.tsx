@@ -1,4 +1,4 @@
-'use client';
+
 
 import { Card, Spinner } from 'flowbite-react';
 
