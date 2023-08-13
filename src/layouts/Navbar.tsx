@@ -149,7 +149,7 @@ export default function NavbarWithCTAButton() {
                         <> <NavLink to={'/new-book'} onClick={handleAddBook} className={({ isActive, isPending }) =>
                             isPending ? "pending" : isActive ? "active" : ""
                         }>Add Book</NavLink>
-                            <button onClick={handleLogOut}>Sign Out</button></>
+                            <NavLink to={'/logout'} onClick={handleLogOut}>Sign Out</NavLink></>
                     ) : (
                         <NavLink to="/signin">Sign in</NavLink>
                     )}
