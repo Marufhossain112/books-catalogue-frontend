@@ -32,13 +32,22 @@ const searchAndFilterReducer = createReducer(initialState, (builder) => {
     .addCase(setFilterGenre, (state, action) => {
       state.filterGenre = action.payload;
       state.isFilterGenre = true;
+      // Clear the filterGenrePublicationYear state
+      state.filterGenrePublicationYear = {};
+      state.isFilterGenrePublication = false;
     })
     .addCase(setFilterPublicationYear, (state, action) => {
       state.filterPublicationYear = action.payload;
       state.isFilterPublication = true;
+      // Clear the filterGenrePublicationYear state
+      state.filterGenrePublicationYear = {};
+      state.isFilterGenrePublication = false;
     })
     .addCase(setFilterGenrePublicationYear, (state, action) => {
-      state.filterGenrePublicationYear = action.payload;
+      state.filterGenrePublicationYear = {
+        ...state.filterGenrePublicationYear,
+        ...action.payload,
+      };
       state.isFilterGenrePublication = true;
     });
 });

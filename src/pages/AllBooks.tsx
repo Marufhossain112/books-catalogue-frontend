@@ -35,51 +35,34 @@ export default function AllBooks() {
                 size="xl"
             />
         </div>;
-
     }
-    // console.log("both", GenrePublicationYearResponse);
-    // handle all books data based on different criteria
-    // let books;
-    // if (isFilterGenrePublicationYear) {
-    //     books = GenrePublicationYearResponse.data;
-    // }
-    // else if (filterGenreResponse === "" || filterPublicationYearResponse === "") {
-    //     books = data.data;
-    // } else if (isFilterGenre === true && filterGenreResponse != "") {
-    //     books = filterGenreResponse.data;
-    // } else if (isFilterPublicationYear && filterPublicationYearResponse != "") {
-    //     books = filterPublicationYearResponse.data;
-    // }
-    // else if (isFilterGenre && isFilterPublicationYear) {
-    //     books = GenrePublicationYearResponse.data;
-    //     // console.log("duitai true", books);
-    // }
-    // else {
-    //     books = searchResponse.data;
-    // }
-    // const books = isFilterGenre ? : searchResponse.data;
-
-
-
     // Combine the conditions to determine which set of books to display
     let books = searchResponse.data;
-    if (isFilterGenrePublicationYear) {
-        books = GenrePublicationYearResponse.data;
-    } else if (isFilterGenre && filterGenreResponse !== "") {
-        books = filterGenreResponse.data;
-    } else if (isFilterPublicationYear && filterPublicationYearResponse !== "") {
-        books = filterPublicationYearResponse.data;
-    } else if (isFilterGenre || isFilterPublicationYear) {
-        // Show books based on the last applied filter
-        books = (isFilterGenre) ? filterGenreResponse.data : filterPublicationYearResponse.data;
-    } else if (!searchTerm && !isFilterGenre && !isFilterPublicationYear) {
+
+    // Check if any of the filter values are not empty
+    const isAnyFilterApplied = FilterGenreValue !== "" || FilterPublicationValue !== "";
+
+    if (isAnyFilterApplied) {
+        // Check if both genre and publication year filters are not empty
+        if (isFilterGenrePublicationYear) {
+            // Check if there's a matching response for the combined genre and publication year filter
+            if (GenrePublicationYearResponse.data.length > 0) {
+                books = GenrePublicationYearResponse.data;
+            }
+        } else {
+            if (isFilterGenre && filterGenreResponse.data.length > 0) {
+                books = filterGenreResponse.data;
+            } else if (isFilterPublicationYear && filterPublicationYearResponse.data.length > 0) {
+                books = filterPublicationYearResponse.data;
+            }
+        }
+    }
+
+    if (!searchTerm && !isAnyFilterApplied) {
         // If no filters and search terms, show all books
         books = data.data;
     }
-    // if (books.length < 1) {
-    //     // console.log("komo kkkkkkkkkkkk");
-    //     setNoBookFound(true);
-    // }
+
     return (
         <>
             {books.length < 1 ? <div className='text-center flex justify-center items-center py-60'><p className='text-2xl font-medium'>No book found</p> </div> : <>  <h1 className='text-center text-3xl mb-5 underline'>All Books</h1>
