@@ -43,12 +43,13 @@ export default function LatestBooks() {
     if (isFilterGenrePublicationYear) {
         books = GenrePublicationYearResponse.data;
     }
-    else if (filterGenreResponse === "" || filterPublicationYearResponse === "") {
-        books = data.data;
-    } else if (isFilterGenre === true && filterGenreResponse != "") {
+    else if (isFilterGenre === true && filterGenreResponse != "") {
         books = filterGenreResponse.data;
     } else if (isFilterPublicationYear && filterPublicationYearResponse != "") {
         books = filterPublicationYearResponse.data;
+    }
+    else if (filterGenreResponse === "" || filterPublicationYearResponse === "") {
+        books = data.data;
     }
     else if (isFilterGenre && isFilterPublicationYear) {
         books = GenrePublicationYearResponse.data;
@@ -61,38 +62,40 @@ export default function LatestBooks() {
     // console.log("mama data niba data", data.data);
     return (
         <>
-            <h1 className='text-center text-3xl mb-5 underline'>Latest Books</h1>
-            <div className='flex flex-wrap container mx-auto justify-center'>
-                {books.map((book: IBook) => {
-                    const { author, genre, publicationYear, title, imgUrl, id, _id } = book;
-                    return (<Card onClick={() => navigate(`/books/${_id}`)}
-                        key={id}
-                        horizontal
-                        imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
-                        className='mx-auto mb-6 root'
-                        style={{ minWidth: "25rem", maxWidth: "25rem", }}
-                    // style={{ height: "15rem", width: "25rem" }}
-                    >
-                        <div>
-                            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                <p>
-                                    {title}
-                                </p>
-                            </h5>
-                            <div className="font-normal text-gray-700 dark:text-gray-400">
-                                <p>
-                                    {author}
-                                </p>
+            {books.length < 1 ? <div className='text-center flex justify-center items-center py-60'><p className='text-2xl font-medium'>No book found</p> </div> : <>  <h1 className='text-center text-3xl mb-5 underline'>Latest Books</h1>
+                <div className='flex flex-wrap container mx-auto justify-center'>
+                    {books.map((book: IBook, index: number) => {
+                        const { author, genre, publicationYear, title, imgUrl, _id } = book;
+                        return (<Card
+                            onClick={() => navigate(`/books/${_id}`)}
+                            key={index}
+                            horizontal
+                            imgSrc={imgUrl ? imgUrl : "/src/assets/images/book1.png"}
+                            className='mx-auto mb-6 root'
+                            style={{ minWidth: "25rem", maxWidth: "25rem", }}
+                        // style={{ height: "15rem", width: "25rem" }}
+                        >
+                            <div>
+                                <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    <p>
+                                        {title}
+                                    </p>
+                                </h5>
+                                <div className="font-normal text-gray-700 dark:text-gray-400">
+                                    <p>
+                                        {author}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <p><span className='font-bold'>Genre : </span>{genre}</p>
-                            <p><span className='font-bold'>Released : </span>{publicationYear}</p>
-                        </div>
-                    </Card>);
-                }
-                )}
-            </div ></>
+                            <div>
+                                <p><span className='font-bold'>Genre : </span>{genre}</p>
+                                <p><span className='font-bold'>Released : </span>{publicationYear}</p>
+                            </div>
+                        </Card>);
+                    }
+                    )}
+                </div ></>}
+        </>
     );
 }
 
