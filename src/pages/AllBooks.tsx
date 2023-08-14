@@ -6,9 +6,7 @@ import { useAppSelector } from '../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from '../redux/features/books/booksApi';
 import { useFilterBooksByGenreFromAllQuery, useFilterBooksByGenrePublicationYearFromAllQuery, useFilterBooksByPublicationYearFromAllQuery, useGetSearchedBooksFromAllQuery } from '../redux/features/searchFilters/searchFilterApi';
-import { useState } from 'react';
 export default function AllBooks() {
-    const [noBookFound, setNoBookFound] = useState(false);
     const searchTerm = useAppSelector((state) => state.searchAndFilter.searchTerm);
     const isFilterGenre = useAppSelector((state) => state.searchAndFilter.isFilterGenre);
     const isFilterPublicationYear = useAppSelector((state) => state.searchAndFilter.isFilterPublication);
